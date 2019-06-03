@@ -1,0 +1,562 @@
+﻿<!doctype html>
+<html>
+<!-- manifest="appcache.manifest" -->
+<head>
+
+    <meta charset="utf-8">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1">
+    <title>Sketch Live Presentation</title>
+    <link rel="stylesheet" href="lib/css/bootstrap.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/adjust.css">
+    <link rel="stylesheet" href="lib/css/codeStyles/my-style.css">
+
+      <!-- stylesheet -->
+  <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/style/canvas.css">
+ <link rel="stylesheet" href="css/style/general.css">
+  <link rel="stylesheet" href="css/style/modal.css">
+  <link rel="stylesheet" href="css/style/styles.css">
+  <link rel="stylesheet" href="css/style/tooltip.css">
+  <link rel="stylesheet" href="css/style/chatroom.css">
+ 
+
+  
+</head>
+
+<body>
+
+    <div id="editor" class="window">
+        <div id="topbar" class="navbar margin-bottom-0">
+            <div class="navbar-inner">
+                <a class="brand" href="#">Sketch Live Presentation</a>
+                <ul class="nav" id="title-label-wrapper" data-bind="visible: !editingTitle()">
+                    <li>
+                        <a href="#" id="label-title" data-bind="text: titleDisplay, click: editTitle"></a>
+                    </li>
+                </ul>
+                <form class="navbar-form pull-left" id="title-editor-wrapper" data-bind="visible: editingTitle" onsubmit="return false;">
+                    <input type="text" class="span2" id="input-title" placeholder="Input the title..." data-bind="value: title, hasfocus: editingTitle">
+                </form>
+                <ul class="nav pull-right">
+                    <li><a href="#theme-manager" data-toggle="modal"><i class="icon-briefcase"></i>SketchBoard</a></li>
+                    <li><a href="#reset-confirm" data-toggle="modal"><i class="icon-repeat"></i> Restart</a></li>
+                    <li>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <i class="icon-file"></i> Open<b class="caret"></b>
+                        </a>
+                        <ul id="import" class="dropdown-menu">
+                            <li><a href="#online-dialog" data-toggle="modal" id="open-online-btn">Open online</a></li>
+                            <li><a href="#import-dialog" data-toggle="modal">Import (text)</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <i class="icon-ok"></i> Save<b class="caret"></b>
+                        </a>
+                        <ul id="export" class="dropdown-menu">
+                            <li><a href="#" id="">Save in Database</a></li>
+                            <li><a href="#" id="save-text-btn">Export as text</a></li>
+                            <li><a href="#" id="save-html-btn">Export as html</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#" id="remove-btn"><i class="icon-remove"></i>Remove</a></li>
+                    <li>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <i class="icon-play"></i> Preview <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu pull-right">
+                            <li><a href="#" id="preview-btn">Start from first page</a></li>
+                            <li><a href="#" id="preview-current-btn">Start from current page</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+
+
+        <div id="mylayoutbar" class="navbar navbar-fixed-top hide">
+            <ul id="layout-list" class="thumbnails" data-bind="foreach: layoutList">
+                <li class="span1" data-bind="css: {active: key == $root.currentLayout()}">
+                    <a href="#" class="thumbnail" data-bind="click: $parent.clickLayout, attr: {title: title}">
+                        <img data-bind="attr: {src: 'images/layout/' + key + '.png'}" />
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <div id="content">
+            <div id="sidebar" class="span3 margin-left-0 width-240">
+                <div id="page-nav">
+                    <div id="mypagebar" class="clearfix">
+                        <div class="btn-group">
+                            <!-- data-bind="click:addPage.bind($data,currentLayout())" -->
+                            <button class="btn" data-toggle="modal" data-target="#template-dialog"><i class="icon-plus"></i></button>
+                            <button class="btn" data-bind="click: clonePage"><i class="icon-file"></i></button>
+                            <button class="btn" data-bind="click: moveUpPage"><i class="icon-arrow-up"></i></button>
+                            <button class="btn" data-bind="click: moveDownPage"><i class="icon-arrow-down"></i></button>
+                            <button class="btn" data-bind="click: removePage"><i class="icon-trash"></i></button>
+                        </div>
+                    </div>
+                    <div id="page-list-wrapper">
+                        <ul id="page-list" class="nav nav-tabs nav-stacked" data-bind="foreach: pageList">
+                            <li data-bind="css: {active: $index() == $root.currentPage()}, click: $parent.clickPage">
+                                <div>
+                                <img data-bind="attr: {src: 'images/layout/' + key + '.png'}" />
+                                </div>
+                                <a href="#" data-bind="text: ($index()+1) + '、' + (title || 'New Page')"></a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="vr"></div>
+            <div id="sidebar2" class="span3 margin-left-0 width-240">
+                    <div id="page-nav">
+                    <a href="#theme-manager" data-toggle="modal"><i class="icon-briefcase"></i>
+                        <input type="button" value="SketchBoard"></a>
+                
+                        <div class="span6">
+                            <ul id="img-manager-tabs" class="nav nav-tabs">
+                                <li class="active" data-key="list"><a href="#my-img-panel" data-toggle="tab">My Picture</a></li>
+                                <li data-key="local"><a href="#img-local-panel" data-toggle="tab">Local</a></li>
+                                <li data-key="url"><a href="#img-url-panel" data-toggle="tab">Online</a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="my-img-panel">
+                                    <ul class="thumbnails" id="my-img-list">
+                                        <li class="span2">
+                                            <a href="#" class="thumbnail"><img></a>
+                                            <p class="clearfix">
+                                                <button class="btn pull-left" data-action="choose">Choose</button>
+                                                <button class="btn btn-danger pull-right" data-action="remove"><i class="icon-trash"></i></button>
+                                            </p>
+                                        </li>
+                                    </ul>
+                                    <div id="my-img-list-holder">
+                                        <h4>Sketch not in the collection?</h4>
+                                        <p>
+                                            You can <a href="#" data-key="local">upload</a>
+                                         or enter <a href="#" data-key="url">URL of online pictures</a> </br>to add templates.
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="tab-pane" id="img-local-panel">
+                                    <p><input type="file"></p>
+                                    <div class="thumbnail"></div>
+                                </div>
+                                <div class="tab-pane" id="img-url-panel">
+                                    <p class="form-inline">
+                                        <input type="text" placeholder="Enter url here.">
+                                        <button class="btn btn-danger" id="img-url-remove"><i class="icon-trash"></i></button>
+                                    </p>
+                                    <div class="thumbnail"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+            <div id="editor-stage" class="stage" data-bind="attr: {'data-design': currentDesign}"
+            data-design="default" style="height: 700px;width: 800px;margin-left: auto;margin-right: auto;">
+                <div id="editor-slide" class="slide" data-bind="attr: {'data-layout': currentLayout}">
+                    <div id="slide-title" data-key="title">
+                        <div class="output" data-bind="click: clickItem"></div>
+                    </div>
+                    <div id="slide-subtitle" data-key="subtitle">
+                        <div class="output" data-bind="click: clickItem"></div>
+                    </div>
+                    <div id="slide-content" data-key="content">
+                        <div class="output" data-bind="click: clickItem"></div>
+                    </div>
+                    <div id="slide-subtitle2" data-key="subtitle2">
+                        <div class="output" data-bind="click: clickItem"></div>
+                    </div>
+                    <div id="slide-content2" data-key="content2">
+                        <div class="output" data-bind="click: clickItem"></div>
+                    </div>
+                    <div id="item-editor-layer" class="layer"></div>
+                </div>
+            </div>
+            <ul class="dropdown-menu" id="myEditorMenu">
+                <li><a href="#" id="myEditorMenuAdd">插入新页面</a></li>
+                <li><a href="#" id="myEditorMenuLayout">选择布局模板</a></li>
+                <li><a class="hide" data-bind="click: moveUpPage" href="#" id="myPageMoveUp">上移页面</a></li>
+                <li><a class="hide" data-bind="click: moveDownPage" href="#" id="myPageMoveDown">下移页面</a></li>
+                <li><a class="hide" data-bind="click: removePage" href="#" id="myPageRemove">删除页面</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div id="player" class="window">
+        <div id="player-stage" class="stage">
+            <div id="player-slides-container">
+                <div class="slide next prev current">
+                    <div data-key=""></div>
+                </div>
+            </div>
+        </div>
+        <div id="player-status">
+            <span id="player-page">1</span> / <span id="player-sum">1</span>
+        </div>
+        <div id="player-nav">
+            <div id="player-menu" class="btn-group">
+                <a href="#" id="player-btn-prev" class="btn">前一页</a>
+                <a href="#" id="player-btn-next" class="btn">下一页</a>
+                <a href="#" id="player-btn-goto" class="btn">跳转</a>
+                <a href="#" id="player-btn-exit" class="btn">退出</a>
+            </div>
+        </div>
+        <ul class="dropdown-menu" id="myPlayerMenu">
+            <li><a href="#" id="myPlayerMenuPrev">前一页</a></li>
+            <li><a href="#" id="myPlayerMenuNext">下一页</a></li>
+            <li><a href="#" id="myPlayerMenuGoto">跳转</a></li>
+            <li><a href="#" id="myPlayerMenu-player-nav-toggle">隐藏操作条</a></li>
+            <li><a href="#" id="myPlayerMenuExit">退出</a></li>
+        </ul>
+    </div>
+
+    <div id="modals" class="layer">
+        <div id="template-dialog" class="modal hide fade">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">×</button>
+                <h3>给页面添加一个模板</h3>
+            </div>
+            <div class="modal-body">
+                <div id="template-panel" class="span6">
+                    <p>请从中选择模板创建一个新页面:</p>
+                    <ul id="template-list" class="thumbnails" data-bind="foreach: tplList">
+                        <li class="span2">
+                            <a href="#" class="thumbnail" data-bind="click: $parent.addPage, attr: {title: title}" data-dismiss="modal">
+                                <img data-bind="attr: {src: 'images/template/' + key + '.png'}" />
+                                <span class="title" data-bind="text: title"></span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" data-dismiss="modal">关闭</button>
+            </div>
+        </div>
+
+        <div id="theme-manager" class="modal hide fade" >
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">×</button>
+                <h4>Sketching Here!</h4>
+            
+            </div>
+            <div class="modal-body" >
+
+             
+                    <ul class="navvv" id="navvv2">
+                            <!-- 颜色选择 -->
+                            <li class="dropdown tooltip2" data-tooltip-title="颜色">
+                              <a href="#" id="id-color" class="dropbtn gray2black-hover">
+                                <i id="id-color-icon" class="fas fa-paint-brush fa-2x"></i>
+                              </a>
+                              <div class="dropdown-content">
+                                <p class="dropdown-content-item">
+                                  <label for="">颜色：</label>
+                                  <input type="radio" class="black" name="color" value="black" checked>
+                                  <input type="radio" class="red" name="color" value="red">
+                                  <input type="radio" class="yellow" name="color" value="yellow">
+                                </p>
+                                <p class="dropdown-content-item">
+                                  <input id="id-color-picker" type="color" value= '#ff0000'>
+                                </p>
+                              </div>
+                            </li>
+                            <!-- 画笔 -->
+                            <li class="dropdown tooltip2" data-tooltip-title="画笔">
+                              <a href="#"  id="id-brush" class="dropbtn gray2black-hover">
+                                <i class="fas fa-pencil-alt fa-2x"></i>
+                              </a>
+                              <div class="dropdown-content">
+                                  <p class="dropdown-content-item">
+                                    <label>画笔粗细：</label>
+                                    <input type="range" min="1" max="10" value="1" name="line-width"></input>
+                                    <span id="line-width">10</span>
+                                  </p>
+                              </div>
+                            </li>
+                          <!-- 文字 -->
+                            <li class="dropdown tooltip2" data-tooltip-title="文字">
+                              <a href="#"  id="id-text" class="dropbtn gray2black-hover">
+                                <i class="fas fa-font fa-2x"></i>
+                              </a>
+                              <div class="dropdown-content"  for="id-text">
+                                  <p class="dropdown-content-item">
+                                    <label>字体：</label>
+                                    <select name="font-family">
+                                      <option value="value1" selected>Value 1</option> 
+                                      <option value="value2">Value 2</option>
+                                      <option value="value3">Value 3</option>
+                                    </select>
+                                  </p>
+                                  <p class="dropdown-content-item">
+                                    <span>没有你需要的字体？</span><br>
+                                    <label for="id-font-name">字体名称：</label>
+                                    <input type="text" id="id-font-name" required><br>
+                                    <label for="id-font-url">字体在线地址：</label>
+                                    <input type="text" id="id-font-url" placeholder="some url" required>
+                                    <input type="submit" id="id-font-submit" value="提交">
+                                  </p>
+                                  <p class="dropdown-content-item">
+                                      <label>字体大小：</label>
+                                      <input type="range" min="10" max="60" value="1" step="2" name="font-size"></input>
+                                      <span id="id-font-size">1</span>
+                                  </p>
+                              </div>
+                            </li>
+                            <!-- 橡皮擦 -->
+                            <li class="dropdown tooltip2" data-tooltip-title="橡皮擦">
+                              <a href="#"  id="id-eraser" class="dropbtn gray2black-hover">
+                                <i class="fas fa-eraser fa-2x"></i>
+                              </a>
+                              <div class="dropdown-content">
+                                  <p class="dropdown-content-item">
+                                    <label>橡皮擦大小：</label>
+                                    <input type="range" min="10" max="60" value="1" step="2" name="eraser-size"></input>
+                                    <span id="eraser-size">1</span>
+                                  </p>
+                              </div>
+                            </li>
+                            <!-- 清空画布 -->
+                            <li class="dropdown tooltip2" data-tooltip-title="清空画布">
+                              <a href="#"  id="id-clear" class="dropbtn  gray2black-hover">
+                                <i class="fas fa-trash-alt fa-2x"></i>
+                              </a>
+                            </li>
+                            <!-- 撤销 -->
+                            <li class="dropdown tooltip2" data-tooltip-title="撤销">
+                              <a href="#"  id="id-undo" class="dropbtn  gray2black-hover">
+                                <i class="fas fa-reply fa-2x"></i>
+                              </a>
+                            </li>
+                            <!-- 恢复 -->
+                            <li class="dropdown tooltip2" data-tooltip-title="恢复">
+                              <a href="#"  id="id-recover" class="dropbtn  gray2black-hover">
+                                <i class="fas fa-share fa-2x"></i>
+                              </a>
+                            </li>
+                          
+                            <!-- 另存为 -->
+                            <li class="dropdown tooltip2" data-tooltip-title="另存为">
+                              <a href="#"  id="id-save" class="dropbtn gray2black-hover">
+                                <i class="fas fa-save fa-2x"></i>
+                              </a>
+                              <div class="dropdown-content">
+                                
+                                  <p class="dropdown-content-item">
+                                    <button id="id-save-img">保存为图片</button>
+                                  </p>
+                              </div>
+                            </li>
+                            <!-- 放大 -->
+                            <li class="dropdown tooltip2" data-tooltip-title="放大">
+                              <a href="#"  id="id-scale" class="dropbtn gray2black-hover">
+                                <i class="fas fa-plus fa-2x"></i>
+                              </a>
+                            </li>
+                            <!-- 缩小 -->
+                            <li class="dropdown tooltip2" data-tooltip-title="缩小">
+                              <a href="#"  id="id-reduce" class="dropbtn gray2black-hover">
+                                <i class="fas fa-minus fa-2x"></i>
+                              </a>
+                            </li>
+                          </ul>
+                        <textarea id="id-textarea" autofocus class="hide absolute"
+                        placeholder="请输入"></textarea>
+                    
+                  
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" data-dismiss="modal">Save to template</button>
+                <button class="btn" data-dismiss="modal">Delete</button>
+            </div>
+        </div>
+
+        <div id="reset-confirm" class="modal hide fade">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">×</button>
+                <h3>Restart</h3>
+            </div>
+            <div class="modal-body">
+              Are you sure to restart?
+            </div>
+            <div class="modal-footer">
+                <button class="btn" data-dismiss="modal">No</button>
+                <button class="btn btn-primary" data-dismiss="modal" data-bind="click: resetData">Yes</button>
+            </div>
+        </div>
+
+        <div id="img-manager" class="modal hide fade">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">×</button>
+                <h3>Add Sketch</h3>
+            </div>
+            <div class="modal-body">
+                <div class="span6">
+                    <ul id="img-manager-tabs" class="nav nav-tabs">
+                        <li class="active" data-key="list"><a href="#my-img-panel" data-toggle="tab">My Picture</a></li>
+                        <li data-key="local"><a href="#img-local-panel" data-toggle="tab">Local</a></li>
+                        <li data-key="url"><a href="#img-url-panel" data-toggle="tab">Online</a></li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="my-img-panel">
+                            <ul class="thumbnails" id="my-img-list">
+                                <li class="span2">
+                                    <a href="#" class="thumbnail"><img></a>
+                                    <p class="clearfix">
+                                        <button class="btn pull-left" data-action="choose">选择</button>
+                                        <button class="btn btn-danger pull-right" data-action="remove"><i class="icon-trash"></i></button>
+                                    </p>
+                                </li>
+                            </ul>
+                            <div id="my-img-list-holder">
+                                <h4>Sketch not in the collection?</h4>
+                                <p>
+                                    You can<a href="#" data-key="local"> upload</a>
+                                    or enter <a href="#" data-key="url">URL of online picture</a> to add template.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="img-local-panel">
+                            <p><input type="file"></p>
+                            <div class="thumbnail"></div>
+                        </div>
+                        <div class="tab-pane" id="img-url-panel">
+                            <p class="form-inline">
+                                <input type="text" placeholder="在这里输入图片地址.">
+                                <button class="btn btn-danger" id="img-url-remove"><i class="icon-trash"></i></button>
+                            </p>
+                            <div class="thumbnail"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" data-dismiss="modal" data-action="save">确定</button>
+                <button class="btn" data-dismiss="modal">取消</button>
+            </div>
+        </div>
+
+      
+        
+
+        <div id="goto-dialog" class="modal hide fade">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">×</button>
+                <h3>跳转到 ...</h3>
+            </div>
+            <div class="modal-body">
+                <div class="span6">
+                    页码:
+                    <input id="goto-number" type="number">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" data-dismiss="modal" data-action="go">确认</button>
+                <button class="btn" data-dismiss="modal">取消</button>
+            </div>
+        </div>
+
+        <div id="import-dialog" class="modal hide fade">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">×</button>
+                <h3 id="import-dialog-title">选择文件</h3>
+            </div>
+            <div class="modal-body" id="confirm-dialog-body">
+                <div id="import-file-panel">
+                    <p><input type="file"></p>
+                    <div class="thumbnail file-info code"></div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn" data-dismiss="modal" data-action="no">取消</button>
+                <button class="btn btn-primary" data-dismiss="modal" id="open-text-btn">确认</button>
+            </div>
+        </div>
+
+        <div id="online-dialog" class="modal hide fade">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">×</button>
+                <h3 id="online-dialog-title">我的文件</h3>
+            </div>
+            <div class="modal-body" id="confirm-dialog-body">
+                <div id="online-file-panel">
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn" data-dismiss="modal" data-action="no">取消</button>
+            </div>
+        </div>
+
+        <div id="confirm-dialog" class="modal hide fade">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">×</button>
+                <h3 id="confirm-dialog-title"></h3>
+            </div>
+            <div class="modal-body" id="confirm-dialog-body"></div>
+            <div class="modal-footer">
+                <button class="btn" data-dismiss="modal" data-action="no">取消</button>
+                <button class="btn btn-primary" data-dismiss="modal" data-action="yes">确认</button>
+            </div>
+        </div>
+    </div>
+    
+
+    
+    <script src="js/scripts/drawhistory.js"></script>
+    <script src="js/scripts/board.js"></script>
+    <script src="js/scripts/utilitys.js"></script>
+    <script src="js/scripts/tools/colorManager.js"></script>
+    <script src="js/scripts/tools/pen.js"></script>
+    <script src="js/scripts/tools/eraser.js"></script>
+    <script src="js/scripts/tools/textarea.js"></script>
+    <script>
+            var _main = function() {
+              var board = new Board();
+              // if(window.location.pathname.slice(1).length > 0) {
+              //   wsClient.initSocket(window.location.pathname.slice(1))
+              // }
+            }
+            _main();
+            console.log('sketchinggggggg')
+            </script>
+    <script id="ctrl-template" type="text/template">
+        <div class="ctrl">
+            <a href="#" class="ctrl-start"></a>
+            <ul class="ctrl-menu">
+                <li><a href="#" data-action="clear">清除</a></li>
+                <li><a href="#" data-action="edit">编辑</a></li>
+                <li class="ctrl-menu-more"><a href="#">...</a></li>
+            </ul>
+        </div>
+    </script>
+    
+   
+    <script src="lib/js/jquery.js"></script>
+    <script src="lib/js/bootstrap.js"></script>
+    
+    <script src="lib/js/knockout-2.2.1.js"></script>
+    <script src="lib/js/highlight.min.js"></script>
+    
+    <script src="js/jquery.colorpicker.js"></script>
+    <script src="js/savefile/FileSaver.js"></script>
+    <script src="js/jquery.cookie.js"></script>
+    
+    <script src="js/adjust.js"></script>
+    
+   
+    
+    <script data-main="js/main" src="js/require.js"></script>
+   
+</body>
+
+
+
+</html>
