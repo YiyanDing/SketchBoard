@@ -147,11 +147,10 @@
     margin-right: 0px;
 }
 
-#canvas_frame{
-    -webkit-box-flex: 1;
-    -moz-box-flex: 1;
-    -ms-box-flex: 1;
-    box-flex: 1;
+
+
+#editor-stage {
+
     display: -webkit-box;
     display: -moz-box;
     display: -ms-box;
@@ -166,11 +165,23 @@
     box-pack: center;
     overflow: inherit;
     padding: 0 10px;
+  
+    width: 56%;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+   
 }
 #editor-slide {
     border: 1px silver solid;
     border-radius: 5px;
     position: relative;
+    margin-left: auto;
+    margin-right: auto;
+    -webkit-box-flex: 1;
+    -moz-box-flex: 1;
+    -ms-box-flex: 1;
+    box-flex: 1;
  
 }
 #editor-slide [data-key] .output {

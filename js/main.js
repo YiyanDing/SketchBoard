@@ -173,25 +173,25 @@ define('storage',[],function () {
 define('data',['storage'], function (storage) {
     var isExport = false;
     var templateList = [
-            {key: 'normal', title: '普通', layout: 'normal', typeMap: {title: 'text', content: 'text'}},
-            {key: 'title', title: '含标题', layout: 'title', typeMap: {title: 'text', content: 'text'}},
-            {key: 'subtitle', title: '含子标题', layout: 'subtitle', typeMap: {title: 'text', content: 'text'}},
-            {key: 'double', title: '两列正文', layout: 'double', typeMap: {title: 'text', content: 'text', content2: 'text'}},
-            {key: 'double-subtitle', title: '含子标题和两列正文', layout: 'double-subtitle', typeMap: {title: 'text', subtitle: 'text', subtitle2: 'text', content: 'text', content2: 'text'}},
-            {key: 'picture', title: '图片', layout: 'imax', typeMap: {title: 'text', content: 'img'}},
-            {key: 'picture-left', title: '图片在左', layout: 'double', typeMap: {title: 'text', content: 'img', content2: 'text'}},
-            {key: 'picture-right', title: '图片在右', layout: 'double', typeMap: {title: 'text', content: 'text', content2: 'img'}}
+            {key: 'normal', title: 'Normal', layout: 'normal', typeMap: {title: 'text', content: 'text'}},
+            {key: 'title', title: 'Title', layout: 'title', typeMap: {title: 'text', content: 'text'}},
+            {key: 'subtitle', title: 'Subtitle', layout: 'subtitle', typeMap: {title: 'text', content: 'text'}},
+            {key: 'double', title: 'Two columns', layout: 'double', typeMap: {title: 'text', content: 'text', content2: 'text'}},
+            {key: 'double-subtitle', title: 'Subtitle with..', layout: 'double-subtitle', typeMap: {title: 'text', subtitle: 'text', subtitle2: 'text', content: 'text', content2: 'text'}},
+            {key: 'picture', title: 'Sketch', layout: 'imax', typeMap: {title: 'text', content: 'img'}},
+            {key: 'picture-left', title: 'Left-sketch', layout: 'double', typeMap: {title: 'text', content: 'img', content2: 'text'}},
+            {key: 'picture-right', title: 'Right-sketch', layout: 'double', typeMap: {title: 'text', content: 'text', content2: 'img'}}
             // {key: 'video', title: 'Youku Video', layout: 'imax', typeMap: {title: 'text', content: 'video'}}
         ];
     var tmplList = [
     ];
     var layoutList = [
-            {key: 'normal', title: '普通'},
-            {key: 'title', title: '含标题'},
-            {key: 'subtitle', title: '含子标题'},
-            {key: 'double', title: '两列正文'},
-            {key: 'double-subtitle', title: '含子标题和两列正文'},
-            {key: 'imax', title: '纯文本'}
+            {key: 'normal', title: 'Normal'},
+            {key: 'title', title: 'Title'},
+            {key: 'subtitle', title: 'Subtitle'},
+            {key: 'double', title: 'Two columns'},
+            {key: 'double-subtitle', title: 'Subtitle with..'},
+            {key: 'imax', title: 'Sketch'}
         ];
     var typeName = {
         text: '文本',
@@ -1507,8 +1507,8 @@ define('types/img',['data', 'vm', 'types/img-helper'], function (dataManager, vm
             dialog.find('[data-action="save"]').click(save);
         },
         preview: function (data, dom) {
-            render(data, dom, '[暂无图片]');
-            showImg(dom, '[暂无图片]');
+            render(data, dom, '[Click to add picture]');
+            showImg(dom, '[Click to add picture]');
         },
         resize: function (data, dom) {
             var src = data.value;
@@ -1518,7 +1518,7 @@ define('types/img',['data', 'vm', 'types/img-helper'], function (dataManager, vm
                 if (src.match(/^media\:\/\//)) {
                     src = dataManager.readMedia(src.substr(8));
                 }
-                lib.embed(src, dom, '[暂无图片]');
+                lib.embed(src, dom, '[Click to add picture]');
             }
         },
         edit: function (key, page, data, dom) {

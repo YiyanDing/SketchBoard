@@ -291,3 +291,18 @@
     width: 17.77778%;
     max-width: 500px; 
 }
+
+#sidebar2 {
+    padding: 10px 0 20px;
+    float: right;
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-box;
+    display: box;
+    -webkit-box-orient: vertical;
+    -moz-box-orient: vertical;
+    -ms-box-orient: vertical;
+    box-orient: vertical;
+    width: 17.77778%;
+    max-width: 500px; 
+}

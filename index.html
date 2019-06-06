@@ -40,7 +40,7 @@
                     <input type="text" class="span2" id="input-title" placeholder="Input the title..." data-bind="value: title, hasfocus: editingTitle">
                 </form>
                 <ul class="nav pull-right">
-                    <li><a href="#theme-manager" data-toggle="modal"><i class="icon-briefcase"></i>SketchBoard</a></li>
+                    <li><a href="#theme-manager" data-toggle="modal"><i class="icon-pencil"></i>SketchBoard</a></li>
                     <li><a href="#reset-confirm" data-toggle="modal"><i class="icon-repeat"></i> Restart</a></li>
                     <li>
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -113,16 +113,16 @@
                 </div>
             </div>
             <div class="vr"></div>
-            <div id="sidebar2" class="span3 margin-left-0 width-240">
+            <div id="sidebar2" class="span3 margin-left-0 width-240" >
                     <div id="page-nav">
-                    <a href="#theme-manager" data-toggle="modal"><i class="icon-briefcase"></i>
-                        <input type="button" value="SketchBoard"></a>
+                    <a href="#theme-manager" data-toggle="modal" style="margin: 25px"><i class="icon-pencil"></i>
+                        <input type="button" value="SketchBoard" style="margin: 8px"></a>
                 
-                        <div class="span6">
+                        <div class="span6" style="margin-top: 10px">
                             <ul id="img-manager-tabs" class="nav nav-tabs">
-                                <li class="active" data-key="list"><a href="#my-img-panel" data-toggle="tab">My Picture</a></li>
-                                <li data-key="local"><a href="#img-local-panel" data-toggle="tab">Local</a></li>
-                                <li data-key="url"><a href="#img-url-panel" data-toggle="tab">Online</a></li>
+                                <li class="active" data-key="list"><a href="#my-img-panel" data-toggle="tab">My Templates</a></li>
+                                <li data-key="local"><a href="#img-local-panel" data-toggle="tab">Local Uploading</a></li>
+                               
                             </ul>
                             <div class="tab-content">
                                 <div class="tab-pane active" id="my-img-panel">
@@ -138,28 +138,23 @@
                                     <div id="my-img-list-holder">
                                         <h4>Sketch not in the collection?</h4>
                                         <p>
-                                            You can <a href="#" data-key="local">upload</a>
-                                         or enter <a href="#" data-key="url">URL of online pictures</a> </br>to add templates.
+                                            You can <a href="#img-local-panel" data-toggle="tab">upload</a>
+                                        from local source to </br>add templates.
                                         </p>
                                     </div>
                                 </div>
                                 <div class="tab-pane" id="img-local-panel">
                                     <p><input type="file"></p>
                                     <div class="thumbnail"></div>
+                                    <button class="btn btn-primary" data-dismiss="modal" data-action="save">Save</button>
+                <button class="btn" data-dismiss="modal">Cancel</button>
                                 </div>
-                                <div class="tab-pane" id="img-url-panel">
-                                    <p class="form-inline">
-                                        <input type="text" placeholder="Enter url here.">
-                                        <button class="btn btn-danger" id="img-url-remove"><i class="icon-trash"></i></button>
-                                    </p>
-                                    <div class="thumbnail"></div>
-                                </div>
+            
                             </div>
                         </div>
                     </div>
             </div>
-            <div id="editor-stage" class="stage" data-bind="attr: {'data-design': currentDesign}"
-            data-design="default" style="height: 700px;width: 800px;margin-left: auto;margin-right: auto;">
+            <div id="editor-stage" class="stage" data-bind="attr: {'data-design': currentDesign}">
                 <div id="editor-slide" class="slide" data-bind="attr: {'data-layout': currentLayout}">
                     <div id="slide-title" data-key="title">
                         <div class="output" data-bind="click: clickItem"></div>
@@ -221,11 +216,11 @@
         <div id="template-dialog" class="modal hide fade">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">×</button>
-                <h3>给页面添加一个模板</h3>
+                <h3>Add a template for this page</h3>
             </div>
             <div class="modal-body">
                 <div id="template-panel" class="span6">
-                    <p>请从中选择模板创建一个新页面:</p>
+                    <p>Chooose from:</p>
                     <ul id="template-list" class="thumbnails" data-bind="foreach: tplList">
                         <li class="span2">
                             <a href="#" class="thumbnail" data-bind="click: $parent.addPage, attr: {title: title}" data-dismiss="modal">
@@ -237,7 +232,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button class="btn btn-primary" data-dismiss="modal">关闭</button>
+                <button class="btn btn-primary" data-dismiss="modal">Close</button>
             </div>
         </div>
 
@@ -258,7 +253,7 @@
                               </a>
                               <div class="dropdown-content">
                                 <p class="dropdown-content-item">
-                                  <label for="">颜色：</label>
+                                  <label for="">Color:</label>
                                   <input type="radio" class="black" name="color" value="black" checked>
                                   <input type="radio" class="red" name="color" value="red">
                                   <input type="radio" class="yellow" name="color" value="yellow">
@@ -275,7 +270,7 @@
                               </a>
                               <div class="dropdown-content">
                                   <p class="dropdown-content-item">
-                                    <label>画笔粗细：</label>
+                                    <label>Pen size:</label>
                                     <input type="range" min="1" max="10" value="1" name="line-width"></input>
                                     <span id="line-width">10</span>
                                   </p>
@@ -288,7 +283,7 @@
                               </a>
                               <div class="dropdown-content"  for="id-text">
                                   <p class="dropdown-content-item">
-                                    <label>字体：</label>
+                                    <label>Font family:</label>
                                     <select name="font-family">
                                       <option value="value1" selected>Value 1</option> 
                                       <option value="value2">Value 2</option>
@@ -296,15 +291,15 @@
                                     </select>
                                   </p>
                                   <p class="dropdown-content-item">
-                                    <span>没有你需要的字体？</span><br>
-                                    <label for="id-font-name">字体名称：</label>
+                                    <span>Can't find the font?</span><br>
+                                    <label for="id-font-name">Font:</label>
                                     <input type="text" id="id-font-name" required><br>
-                                    <label for="id-font-url">字体在线地址：</label>
+                                    <label for="id-font-url">online address：</label>
                                     <input type="text" id="id-font-url" placeholder="some url" required>
                                     <input type="submit" id="id-font-submit" value="提交">
                                   </p>
                                   <p class="dropdown-content-item">
-                                      <label>字体大小：</label>
+                                      <label>Font size:</label>
                                       <input type="range" min="10" max="60" value="1" step="2" name="font-size"></input>
                                       <span id="id-font-size">1</span>
                                   </p>
@@ -317,7 +312,7 @@
                               </a>
                               <div class="dropdown-content">
                                   <p class="dropdown-content-item">
-                                    <label>橡皮擦大小：</label>
+                                    <label>Eraser Size:</label>
                                     <input type="range" min="10" max="60" value="1" step="2" name="eraser-size"></input>
                                     <span id="eraser-size">1</span>
                                   </p>
@@ -350,7 +345,7 @@
                               <div class="dropdown-content">
                                 
                                   <p class="dropdown-content-item">
-                                    <button id="id-save-img">保存为图片</button>
+                                    <button id="id-save-img">Save as Template</button>
                                   </p>
                               </div>
                             </li>
@@ -410,7 +405,7 @@
                                 <li class="span2">
                                     <a href="#" class="thumbnail"><img></a>
                                     <p class="clearfix">
-                                        <button class="btn pull-left" data-action="choose">选择</button>
+                                        <button class="btn pull-left" data-action="choose">Choose</button>
                                         <button class="btn btn-danger pull-right" data-action="remove"><i class="icon-trash"></i></button>
                                     </p>
                                 </li>
@@ -438,8 +433,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button class="btn btn-primary" data-dismiss="modal" data-action="save">确定</button>
-                <button class="btn" data-dismiss="modal">取消</button>
+                <button class="btn btn-primary" data-dismiss="modal" data-action="save">Save</button>
+                <button class="btn" data-dismiss="modal">Cancel</button>
             </div>
         </div>
 
