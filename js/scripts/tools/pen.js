@@ -28,9 +28,8 @@ class MovableBlock {
         return true
       }
       var touch = e.touches[0]
-      var x = touch.clientX - self.canvas.offsetWidth
-      var y = touch.clientY - self.canvas.offsetHeight
-      f(x, y)
+      var x = touch.clientX 
+      var y = touch.clientY 
     })
   }
   addRangeEvt(inputElem, outputElem) {
