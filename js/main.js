@@ -1364,7 +1364,7 @@ define('types/img',['data', 'vm', 'types/img-helper'], function (dataManager, vm
             li.find('[data-action="choose"]').click(function () {
                 setCurrentLi(li, mid);
                 save();
-                dialog.modal('hide');
+               /* dialog.modal('hide');*/
             });
             li.find('[data-action="remove"]').click(function (e) {
                 e.preventDefault();
@@ -1497,7 +1497,7 @@ define('types/img',['data', 'vm', 'types/img-helper'], function (dataManager, vm
 
             urlBtnRemove.click(function () {
                 dataManager.setValue(vm.currentPage(), vm.currentItem(), '');
-                dialog.modal('hide');
+               /* dialog.modal('hide');*/
             });
 
             dialog.on('hidden', function () {
