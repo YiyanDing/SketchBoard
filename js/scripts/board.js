@@ -3,8 +3,8 @@ class Board {
 
   constructor() {
     //Dom 对象
-    this.canvas = createHiDPICanvas(window.innerWidth, window.innerHeight - 60)
-    document.getElementById("navvv2").appendChild(this.canvas)
+    this.canvas = createHiDPICanvas(800,500)
+    document.getElementById("sketching").appendChild(this.canvas)
     this.clearBtn = sel('#id-clear')
     this.inviteBtn = sel('#id-invite-btn')
     // 另存为
