@@ -27,11 +27,10 @@ class MovableBlock {
         f()
         return true
       }
-      var touch = e.touches[0]
-      var modalHeadX = document.getElementById("modalHead").x
-      var modalHeadY = document.getElementById("modalHead").y
-      var x = touch.clientX - self.canvas.offsetLeft - window.pageXOffset - modalHeadX
-      var y = touch.clientY - self.canvas.offsetTop - window.pageYOffset - modalHeadY
+      var touch = e.changedTouches[0]
+   
+      var x = touch.clientX - self.canvas.offsetLeft - window.pageXOffset 
+      var y = touch.clientY - self.canvas.offsetTop - window.pageYOffset 
       f(x, y)
     })
   }
