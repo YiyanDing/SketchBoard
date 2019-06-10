@@ -27,7 +27,7 @@ class MovableBlock {
         f()
         return true
       }
-      var touch = e.changedTouches[0]
+      var touch = e.touches[0]
    
       var x = touch.clientX - self.canvas.offsetLeft - window.pageXOffset 
       var y = touch.clientY - self.canvas.offsetTop - window.pageYOffset 
