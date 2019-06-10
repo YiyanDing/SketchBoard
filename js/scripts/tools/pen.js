@@ -28,8 +28,8 @@ class MovableBlock {
         return true
       }
       var touch = e.touches[0]
-      var x = touch.clientX - self.canvas.offsetLeft - window.x
-      var y = touch.clientY - self.canvas.offsetTop - window.y
+      var x = touch.clientX - self.canvas.offsetLeft - window.screenLeft
+      var y = touch.clientY - self.canvas.offsetTop - window.screenTop
       f(x, y)
     })
   }
