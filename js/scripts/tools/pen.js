@@ -31,7 +31,7 @@ class MovableBlock {
    var modalHead = document.getElementById('modalHead')
    var modalBody = document.getElementById('sketching')
       var x = touch.clientX - self.canvas.offsetLeft  - modalHead.getBoundingClientRect().left
-      var y = touch.clientY - self.canvas.offsetTop  - modalHead.getBoundingClientRect().top - modalHead.getBoundingClientRect().top 
+      var y = touch.clientY - self.canvas.offsetTop  - modalHead.getBoundingClientRect().top - modalBody.getBoundingClientRect().top 
       f(x, y)
     })
   }
