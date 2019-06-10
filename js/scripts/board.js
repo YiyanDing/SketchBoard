@@ -4,6 +4,7 @@ class Board {
   constructor() {
     //Dom 对象
     this.canvas = createHiDPICanvas(800,500)
+    //this.canvas = createHiDPICanvas(window.innerWidth, window.innerHeight - 60)
     document.getElementById("sketching").appendChild(this.canvas)
     this.clearBtn = sel('#id-clear')
     this.inviteBtn = sel('#id-invite-btn')

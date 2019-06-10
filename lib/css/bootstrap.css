@@ -4373,8 +4373,8 @@ input[type="submit"].btn.btn-mini {
 }
 .modal {
   position: fixed;
-  top: 10%;
-  left: 50%;
+
+  left: 40%;
   z-index: 1050;
   width: 800px;
   margin-left: -280px;
@@ -4401,7 +4401,7 @@ input[type="submit"].btn.btn-mini {
           transition: opacity 0.3s linear, top 0.3s ease-out;
 }
 .modal.fade.in {
-  top: 10%;
+  top: 1%;
 }
 .modal-header {
   padding: 9px 15px;
