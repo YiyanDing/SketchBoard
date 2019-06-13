@@ -3,7 +3,7 @@ class Board {
 
   constructor() {
     //Dom 对象
-    this.canvas = createHiDPICanvas(800,500)
+    this.canvas = createHiDPICanvas(800,1000)
     //this.canvas = createHiDPICanvas(window.innerWidth, window.innerHeight - 60)
     document.getElementById("sketching").appendChild(this.canvas)
     this.clearBtn = sel('#id-clear')
@@ -11,6 +11,9 @@ class Board {
     // 另存为
     this.savePDFBtn = sel('#id-save-pdf')
     this.saveImgBtn = sel('#id-save-img')
+    //save as template
+    this.saveTemBtn = sel('#saveTo')
+    this.addTemBtn = sel('#saving')
     // 放大缩小
     this.scaleBtn = sel('#id-scale')
     this.reduceBtn = sel('#id-reduce')
@@ -21,8 +24,9 @@ class Board {
     this.width = this.canvas.width
     this.height = this.canvas.height
     this.tool = null
-
-    //运行中常改变的状态
+//换图
+this.addTem = sel('#showPic')
+//运行中常改变的状态
     this.tools = [
       new Pen(this.canvas, this.colorManager, this.updateCurCanvas.bind(this)),
       new Eraser(this.canvas, this.updateCurCanvas.bind(this)),
@@ -78,8 +82,154 @@ class Board {
     })*/
     // 另存为图片和PDF
     addListener(this.saveImgBtn, 'click', event => {
-      downloadFile('download.png', this.canvas.toDataURL())
+      //original:  downloadFile('download.png', this.canvas.toDataURL())
+      //might help: https://www.cnblogs.com/eoooxy/p/6051343.html
+      downloadFile('download.png', this.canvas.toDataURL("image/png"))
+
+
     })
+
+    addListener(this.saveTemBtn , 'click', event => {
+     savePic(this.canvas)
+
+console.log("hereherehere")
+    })
+
+    function savePic(content) {
+      var pic  = document.getElementById('showPic');
+var pic2 = document.getElementById('showPic');
+//document.getElementById("addTemplate").appendChild(pic2);
+       // 得到了需要保存的 相关图的信息 格式为:data:image/png;base64,xxxx" 有效的为xxxx部分
+       var strDateUrl = content.toDataURL("image/png"); 
+         // pic.src = strDateUrl;
+         //tmpUpload('#addTemplate', content);
+      
+
+
+var oImgBox = document.createElement("img");
+    oImgBox.setAttribute("id", "imgBox");
+   oImgBox.setAttribute("src",strDateUrl);
+   oImgBox.setAttribute("width","300px");
+   oImgBox.setAttribute("height","300px");
+   var tmpShowList = document.getElementById('my-tem-list');
+   insertAfter(oImgBox, tmpShowList);
+   document.getElementById('descriptionText').style.display="none";
+    }
+
+    function insertAfter(newEle, targetEle){
+      var parentEle = targetEle.parentNode;
+      if(parentEle.lastChild == targetEle){
+          parentEle.appendChild(newEle);
+      }
+      else{
+          parentEle.insertBefore(newEle, targetEle.nextSibling);
+      }
+  }
+
+/*
+function buildTmpList (tmpListp){
+tmpListp.forEach(function (mid) {
+  var li = $('<li class="span2"><a href="#" class="thumbnail"><img></a>' +
+      '<p class="clearfix"><button class="btn pull-left" data-action="choose">Choose</button>' +
+      '<button class="btn btn-danger pull-right" data-action="remove"><i class="icon-trash"></i></button></p></li>');
+
+  if (mid == oldMid) {
+      currentLi = li.addClass('active');
+  }
+  li.find('img').attr('src', strDateUrl);
+  li.find('a').click(function (e) {
+      e.preventDefault();
+      setCurrentLi(li, mid);
+  });
+ /* li.find('[data-action="choose"]').click(function () {
+      setCurrentLi(li, mid);
+      save();
+     /* dialog.modal('hide');
+  });
+  li.find('[data-action="remove"]').click(function (e) {
+      e.preventDefault();
+      if (li.hasClass('active')) {
+          newMid = '$';
+      }
+      li.remove();
+      dataManager.removeMedia(mid);
+      checkMediaListEmpty();
+  });
+
+  tmpList.append(li);
+});
+//return 
+}
+    
+
+   }
+/*
+function tmpUpload (tmpList){
+  var tmpList = $('#my-tem-list');
+  var tmpListHolder = $('#my-tem-list-holder');
+  var currentLi;
+  var oldMid;
+  var newMid;
+
+  function setCurrentLi(li, mid) {
+    if (currentLi) {
+        currentLi.removeClass('active');
+    }
+    currentLi = li.addClass('active');
+
+    newMid = mid;
+}
+  function checkMediaListEmpty() {
+    if (tmpList.find('li').length == 0) {
+        tmpList.hide();
+        tmpListHolder.show();
+    }
+    else {
+        tmpList.show();
+        tmpListHolder.hide();
+    }
+}
+function buildMeidaList(mediaList) {
+  tmpList.empty();
+
+  mediaList.forEach(function (mid) {
+      var li = $('<li class="span2"><a href="#" class="thumbnail"><img></a>' +
+          '<p class="clearfix"><button class="btn pull-left" data-action="choose">Choose</button>' +
+          '<button class="btn btn-danger pull-right" data-action="remove"><i class="icon-trash"></i></button></p></li>');
+
+      if (mid == oldMid) {
+          currentLi = li.addClass('active');
+      }
+      li.find('img').attr('src', dataManager.readMedia(mid));
+      li.find('a').click(function (e) {
+          e.preventDefault();
+          setCurrentLi(li, mid);
+      });
+     
+      li.find('[data-action="remove"]').click(function (e) {
+          e.preventDefault();
+          if (li.hasClass('active')) {
+              newMid = '$';
+          }
+          li.remove();
+          dataManager.removeMedia(mid);
+          checkMediaListEmpty();
+      });
+      imgList.append(li);
+  });
+
+  checkMediaListEmpty();
+}
+
+
+}
+    addListener(this.saveTemBtn, 'click', event => {
+      //original:  downloadFile('download.png', this.canvas.toDataURL())
+      //might help: https://www.cnblogs.com/eoooxy/p/6051343.html
+      downloadFile('download.png', this.canvas.toDataURL("image/png"))
+
+
+    })*/
   
     // 放大缩小
     addListener(this.scaleBtn ,'click', event => {

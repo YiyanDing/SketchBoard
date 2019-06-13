@@ -69,6 +69,11 @@ function downloadFile(fileName, content){
   aLink.href = URL.createObjectURL(blob)
   aLink.dispatchEvent(evt)
 }
+
+
+
+
+
 function AjaxGet(url, callback) {
   var httpRequest = new XMLHttpRequest()
   if (!httpRequest) {

@@ -78,8 +78,8 @@
     z-index: 6;
 }
 .output {
-    width: 85%;
-    height: 85%;
+    width: 60%;
+    height: 60%;
     box-sizing: border-box;
     word-break: break-all;
 }
@@ -288,9 +288,9 @@
     -moz-box-orient: vertical;
     -ms-box-orient: vertical;
     box-orient: vertical;
-    width: 17.77778%;
-    max-width: 470px;
-    margin-right: 100px;
+    width: 25%;
+    max-width: 1000px;
+    margin-right: 50px;
 }
 #page-nav {
     display: -webkit-box;

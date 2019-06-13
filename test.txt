@@ -1,0 +1,55 @@
+var x = touch.clientX - self.canvas.offsetLeft - windowOffset.x
+      var y = touch.clientY - self.canvas.offsetTop - windowOffset.y
+
+
+      var x = touch.clientX - self.canvas.offsetLeft 
+      var y = touch.clientY - self.canvas.offsetTop 
+
+
+
+.modal {
+  position: fixed;
+  top: 10%;
+  left: 50%;
+
+
+
+
+ var touch = e.touches[0]
+
+
+
+
+    <div class="span6" style="margin-top: 10px">
+                            <ul id="img-manager-tabs" class="nav nav-tabs">
+                                <li class="active" data-key="list"><a href="#my-img-panel" data-toggle="tab">My Templates</a></li>
+                                <li data-key="local"><a href="#img-local-panel" data-toggle="tab">Local Uploading</a></li>
+                               
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="my-img-panel">
+                                    <ul class="thumbnails" id="my-img-list">
+                                        <li class="span2">
+                                            <a href="#" class="thumbnail"><img></a>
+                                            <p class="clearfix">
+                                                <button class="btn pull-left" data-action="choose">Choose</button>
+                                                <button class="btn btn-danger pull-right" data-action="remove"><i class="icon-trash"></i></button>
+                                            </p>
+                                        </li>
+                                    </ul>
+                                    <div id="my-img-list-holder">
+                                        <h4>Sketch not in the collection?</h4>
+                                        <p>
+                                            You can <a href="#img-local-panel" data-toggle="tab">upload</a>
+                                        from local source to </br>add templates.
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="tab-pane" id="img-local-panel">
+                                    <p><input type="file"></p>
+                                    <div class="thumbnail"></div>
+                                    
+                                </div>
+            
+                            </div>
+                        </div>

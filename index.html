@@ -15,6 +15,7 @@
       <!-- stylesheet -->
   <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
   <link rel="stylesheet" href="css/style/canvas.css">
+  <link rel="stylesheet" href="css/tinyImgUpload.css">
  <link rel="stylesheet" href="css/style/general.css">
   <link rel="stylesheet" href="css/style/modal.css">
   <link rel="stylesheet" href="css/style/styles.css">
@@ -115,46 +116,41 @@
             <div class="vr"></div>
             <div id="sidebar2" class="span3 margin-left-0 width-240" >
                     <div id="page-nav">
-                    <a href="#theme-manager" data-toggle="modal" style="margin: 25px"><i class="icon-pencil"></i>
-                        <input type="button" value="SketchBoard" style="margin: 8px"></a>
-                
-                        <div class="span6" style="margin-top: 10px">
-                            <ul id="img-manager-tabs" class="nav nav-tabs">
-                                <li class="active" data-key="list"><a href="#my-img-panel" data-toggle="tab">My Templates</a></li>
-                                <li data-key="local"><a href="#img-local-panel" data-toggle="tab">Local Uploading</a></li>
-                               
+                    
+                        <div class="templateArea">
+                         <ul id="img-manager-tabs" class="nav nav-tabs">
+                        <li class="active" data-key="list"><a href="#my-tem-panel" data-toggle="tab">My Templates</a></li>
+                        <li data-key="local"><a href="#tem-local-panel" data-toggle="tab">Local Templates</a></li>
+    
+                    </ul>
+
+                    <div class="tab-content" >
+                        <div class="tab-pane active" id="my-tem-panel" style="position:relative; height: 600px; overflow-y :scroll">
+                                <div id="addTemplate"  >
+                            <ul id="my-tem-list">
+                     
+                              <p id="descriptionText"> Add your first template!</p>
+                              <a href="#theme-manager" data-toggle="modal" style="margin: 25px"><i class="icon-pencil"></i>
+                                <input type="button" value="Add Templates" style="margin: 8px"></a>
                             </ul>
-                            <div class="tab-content">
-                                <div class="tab-pane active" id="my-img-panel">
-                                    <ul class="thumbnails" id="my-img-list">
-                                        <li class="span2">
-                                            <a href="#" class="thumbnail"><img></a>
-                                            <p class="clearfix">
-                                                <button class="btn pull-left" data-action="choose">Choose</button>
-                                                <button class="btn btn-danger pull-right" data-action="remove"><i class="icon-trash"></i></button>
-                                            </p>
-                                        </li>
-                                    </ul>
-                                    <div id="my-img-list-holder">
-                                        <h4>Sketch not in the collection?</h4>
-                                        <p>
-                                            You can <a href="#img-local-panel" data-toggle="tab">upload</a>
-                                        from local source to </br>add templates.
-                                        </p>
-                                    </div>
-                                </div>
-                                <div class="tab-pane" id="img-local-panel">
-                                    <p><input type="file"></p>
-                                    <div class="thumbnail"></div>
-                                    
-                                </div>
-            
+                        </div>
+                          
+                        </div>
+                        <div class="tab-pane" id="tem-local-panel" style="position:relative; height:auto!important; height:500px;  overflow-y :scroll; overflow-x: hidden">
+                           
+                            <div id="uploadImage" >
+
                             </div>
+                            <button class="submitImage btn-primary">submit</button>
                         </div>
-                        <div>
-                            <button class="btn btn-primary" data-dismiss="modal" data-action="save">Save</button>
-                            <button class="btn" data-dismiss="modal">Cancel</button>
-                        </div>
+                
+                    </div>
+                        
+
+
+
+                    
+                       </div>
                     </div>
             </div>
             <div id="editor-stage" class="stage" data-bind="attr: {'data-design': currentDesign}">
@@ -348,7 +344,7 @@
                               <div class="dropdown-content">
                                 
                                   <p class="dropdown-content-item">
-                                    <button id="id-save-img">Save as Template</button>
+                                    <button id="id-save-img">Download as png</button>
                                   </p>
                               </div>
                             </li>
@@ -371,8 +367,8 @@
                   
             </div>
             <div class="modal-footer">
-                <button class="btn btn-primary" data-dismiss="modal">Save to template</button>
-                <button class="btn" data-dismiss="modal">Delete</button>
+                <button class="btn btn-primary" data-dismiss="modal" id="saveTo">Save to template</button>
+                <button class="btn" data-dismiss="modal">Close</button>
             </div>
         </div>
 
@@ -535,6 +531,25 @@
             </ul>
         </div>
     </script>
+    <script src="js/tinyImgUpload.js"></script>
+    <script>
+        //document.documentElement.style.fontSize = document.documentElement.clientWidth*0.1+'px';
+        
+        var options = {
+            path: '/',
+            onSuccess: function (res) {
+                console.log(res);
+            },
+            onFailure: function (res) {
+                console.log(res);
+            }
+        }
+        
+        var upload = tinyImgUpload('#uploadImage', options);
+        document.getElementsByClassName('submitImage')[0].onclick = function (e) {
+            upload();
+        }
+        </script>
     
    
     <script src="lib/js/jquery.js"></script>
@@ -548,7 +563,7 @@
     <script src="js/jquery.cookie.js"></script>
     
     <script src="js/adjust.js"></script>
-    
+
    
     
     <script data-main="js/main" src="js/require.js"></script>

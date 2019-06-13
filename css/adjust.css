@@ -303,6 +303,6 @@
     -moz-box-orient: vertical;
     -ms-box-orient: vertical;
     box-orient: vertical;
-    width: 17.77778%;
-    max-width: 500px; 
+    width: 25%;
+    max-width: 1000px; 
 }
