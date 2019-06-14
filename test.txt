@@ -21,6 +21,7 @@ var x = touch.clientX - self.canvas.offsetLeft - windowOffset.x
 
 
     <div class="span6" style="margin-top: 10px">
+
                             <ul id="img-manager-tabs" class="nav nav-tabs">
                                 <li class="active" data-key="list"><a href="#my-img-panel" data-toggle="tab">My Templates</a></li>
                                 <li data-key="local"><a href="#img-local-panel" data-toggle="tab">Local Uploading</a></li>
@@ -53,3 +54,25 @@ var x = touch.clientX - self.canvas.offsetLeft - windowOffset.x
             
                             </div>
                         </div>
+
+
+
+//html 156行以下 原ppt套用模版
+<div id="editor-slide" class="slide" data-bind="attr: {'data-layout': currentLayout}">
+                    <div id="slide-title" data-key="title">
+                        <div class="output" data-bind="click: clickItem"></div>
+                    </div>
+                    <div id="slide-subtitle" data-key="subtitle">
+                        <div class="output" data-bind="click: clickItem"></div>
+                    </div>
+                    <div id="slide-content" data-key="content">
+                        <div class="output" data-bind="click: clickItem"></div>
+                    </div>
+                    <div id="slide-subtitle2" data-key="subtitle2">
+                        <div class="output" data-bind="click: clickItem"></div>
+                    </div>
+                    <div id="slide-content2" data-key="content2">
+                        <div class="output" data-bind="click: clickItem"></div>
+                    </div>
+                    <div id="item-editor-layer" class="layer"></div>
+                </div>

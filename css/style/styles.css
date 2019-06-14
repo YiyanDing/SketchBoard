@@ -76,7 +76,11 @@ input:checked {
   padding: 14px 16px;
   text-decoration: none;
 }
-.dropdownn{
+.dropdown{
+  display: inline-block;
+  /* color: rgba(0,0,0,0.2); */
+}
+.dropdown2{
   display: inline-block;
   /* color: rgba(0,0,0,0.2); */
 }

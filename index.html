@@ -153,23 +153,128 @@
                        </div>
                     </div>
             </div>
-            <div id="editor-stage" class="stage" data-bind="attr: {'data-design': currentDesign}">
-                <div id="editor-slide" class="slide" data-bind="attr: {'data-layout': currentLayout}">
-                    <div id="slide-title" data-key="title">
-                        <div class="output" data-bind="click: clickItem"></div>
-                    </div>
-                    <div id="slide-subtitle" data-key="subtitle">
-                        <div class="output" data-bind="click: clickItem"></div>
-                    </div>
-                    <div id="slide-content" data-key="content">
-                        <div class="output" data-bind="click: clickItem"></div>
-                    </div>
-                    <div id="slide-subtitle2" data-key="subtitle2">
-                        <div class="output" data-bind="click: clickItem"></div>
-                    </div>
-                    <div id="slide-content2" data-key="content2">
-                        <div class="output" data-bind="click: clickItem"></div>
-                    </div>
+            <div id="editor-stage" class="stage" >
+
+                <div id="editor-slide" class="slide"  data-bind="attr: {'data-layout': currentLayout}">
+                        <ul class="navvv" id="navvv3">
+                                <!-- 颜色选择 -->
+                                <li class="dropdown2 tooltip2" data-tooltip-title="颜色">
+                                  <a href="#" id="id-color2" class="dropbtn gray2black-hover">
+                                    <i id="id-color-icon2" class="fas fa-paint-brush fa-2x"></i>
+                                  </a>
+                                  <div class="dropdown-content">
+                                    <p class="dropdown-content-item">
+                                      <label for="">Color:</label>
+                                      <input type="radio" class="black" name="color" value="black" checked>
+                                      <input type="radio" class="red" name="color" value="red">
+                                      <input type="radio" class="yellow" name="color" value="yellow">
+                                    </p>
+                                    <p class="dropdown-content-item">
+                                      <input id="id-color-picker2" type="color" value= '#ff0000'>
+                                    </p>
+                                  </div>
+                                </li>
+                                <!-- 画笔 -->
+                                <li class="dropdown2 tooltip2" data-tooltip-title="画笔">
+                                  <a href="#"  id="id-brush2" class="dropbtn gray2black-hover">
+                                    <i class="fas fa-pencil-alt fa-2x"></i>
+                                  </a>
+                                  <div class="dropdown-content">
+                                      <p class="dropdown-content-item">
+                                        <label>Pen size:</label>
+                                        <input type="range" min="1" max="10" value="1" name="line-width"></input>
+                                        <span id="line-width2">0</span>
+                                      </p>
+                                  </div>
+                                </li>
+                              <!-- 文字 -->
+                                <li class="dropdown2 tooltip2" data-tooltip-title="文字">
+                                  <a href="#"  id="id-text2" class="dropbtn gray2black-hover">
+                                    <i class="fas fa-font fa-2x"></i>
+                                  </a>
+                                  <div class="dropdown-content"  for="id-text">
+                                      <p class="dropdown-content-item">
+                                        <label>Font family:</label>
+                                        <select name="font-family">
+                                          <option value="value1" selected>Value 1</option> 
+                                          <option value="value2">Value 2</option>
+                                          <option value="value3">Value 3</option>
+                                        </select>
+                                      </p>
+                                      <p class="dropdown-content-item">
+                                        <span>Can't find the font?</span><br>
+                                        <label for="id-font-name">Font:</label>
+                                        <input type="text" id="id-font-name" required><br>
+                                        <label for="id-font-url">online address：</label>
+                                        <input type="text" id="id-font-url" placeholder="some url" required>
+                                        <input type="submit" id="id-font-submit" value="提交">
+                                      </p>
+                                      <p class="dropdown-content-item">
+                                          <label>Font size:</label>
+                                          <input type="range" min="10" max="60" value="1" step="2" name="font-size"></input>
+                                          <span id="id-font-size">1</span>
+                                      </p>
+                                  </div>
+                                </li>
+                                <!-- 橡皮擦 -->
+                                <li class="dropdown2 tooltip2" data-tooltip-title="橡皮擦">
+                                  <a href="#"  id="id-eraser2" class="dropbtn gray2black-hover">
+                                    <i class="fas fa-eraser fa-2x"></i>
+                                  </a>
+                                  <div class="dropdown-content">
+                                      <p class="dropdown-content-item">
+                                        <label>Eraser Size:</label>
+                                        <input type="range" min="10" max="60" value="1" step="2" name="eraser-size"></input>
+                                        <span id="eraser-size">1</span>
+                                      </p>
+                                  </div>
+                                </li>
+                                <!-- 清空画布 -->
+                                <li class="dropdown2 tooltip2" data-tooltip-title="清空画布">
+                                  <a href="#"  id="id-clear2" class="dropbtn  gray2black-hover">
+                                    <i class="fas fa-trash-alt fa-2x"></i>
+                                  </a>
+                                </li>
+                                <!-- 撤销 -->
+                                <li class="dropdown2 tooltip2" data-tooltip-title="撤销">
+                                  <a href="#"  id="id-undo2" class="dropbtn  gray2black-hover">
+                                    <i class="fas fa-reply fa-2x"></i>
+                                  </a>
+                                </li>
+                                <!-- 恢复 -->
+                                <li class="dropdown2 tooltip2" data-tooltip-title="恢复">
+                                  <a href="#"  id="id-recover2" class="dropbtn  gray2black-hover">
+                                    <i class="fas fa-share fa-2x"></i>
+                                  </a>
+                                </li>
+                              
+                                <!-- 另存为 -->
+                                <li class="dropdown2 tooltip2" data-tooltip-title="另存为">
+                                  <a href="#"  id="id-save2" class="dropbtn gray2black-hover">
+                                    <i class="fas fa-save fa-2x"></i>
+                                  </a>
+                                  <div class="dropdown-content">
+                                    
+                                      <p class="dropdown-content-item">
+                                        <button id="id-save-img2">Download as png</button>
+                                      </p>
+                                  </div>
+                                </li>
+                                <!-- 放大 -->
+                                <li class="dropdown2 tooltip2" data-tooltip-title="放大">
+                                  <a href="#"  id="id-scale2" class="dropbtn gray2black-hover">
+                                    <i class="fas fa-plus fa-2x"></i>
+                                  </a>
+                                </li>
+                                <!-- 缩小 -->
+                                <li class="dropdown2 tooltip2" data-tooltip-title="缩小">
+                                  <a href="#"  id="id-reduce2" class="dropbtn gray2black-hover">
+                                    <i class="fas fa-minus fa-2x"></i>
+                                  </a>
+                                </li>
+                              </ul>
+                            <textarea id="id-textarea2" autofocus class="hide absolute"
+                            placeholder="请输入"></textarea>
                     <div id="item-editor-layer" class="layer"></div>
                 </div>
             </div>
@@ -506,6 +611,7 @@
     
     <script src="js/scripts/drawhistory.js"></script>
     <script src="js/scripts/board.js"></script>
+    <script src="js/scripts/board2.js"></script>
     <script src="js/scripts/utilitys.js"></script>
     <script src="js/scripts/tools/colorManager.js"></script>
     <script src="js/scripts/tools/pen.js"></script>
@@ -521,6 +627,20 @@
             _main();
             console.log('sketchinggggggg')
             </script>
+             <script src="js/scripts/tools/colorManager.1.js"></script>
+             <script src="js/scripts/tools/pen.1.js"></script>
+             <script src="js/scripts/tools/eraser.1.js"></script>
+             <script src="js/scripts/tools/textarea.1.js"></script>
+      <script>
+            var _main2 = function() {
+              var board2 = new Board2();
+              // if(window.location.pathname.slice(1).length > 0) {
+              //   wsClient.initSocket(window.location.pathname.slice(1))
+              // }
+            }
+            _main2();
+            console.log('sketchinggggggg')
+            </script>  
     <script id="ctrl-template" type="text/template">
         <div class="ctrl">
             <a href="#" class="ctrl-start"></a>
