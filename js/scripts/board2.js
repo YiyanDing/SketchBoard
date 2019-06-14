@@ -3,7 +3,7 @@ class Board2 {
 
   constructor() {
     //Dom 对象
-    this.canvas = createHiDPICanvas(620,423)
+    this.canvas = createHiDPICanvas(600,410)
     //this.canvas = createHiDPICanvas(window.innerWidth, window.innerHeight - 60)
     document.getElementById("editor-slide").appendChild(this.canvas)
     this.clearBtn = sel('#id-clear2')

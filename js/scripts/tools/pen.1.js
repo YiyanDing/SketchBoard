@@ -28,10 +28,10 @@ class MovableBlock2 {
         return true
       }
       var touch = e.touches[0]
-   var modalHead = document.getElementById('editor-slide')
+   var modalHead = document.getElementById('editor-stage')
    var modalBody = document.getElementById('editor-slide')
       var x = touch.clientX - self.canvas.offsetLeft  - modalHead.getBoundingClientRect().left
-      var y = touch.clientY - self.canvas.offsetTop  - modalHead.getBoundingClientRect().top - modalBody.getBoundingClientRect().top 
+      var y = touch.clientY - self.canvas.offsetTop   - modalBody.getBoundingClientRect().top 
       f(x, y)
     })
   }
