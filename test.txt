@@ -76,3 +76,8 @@ var x = touch.clientX - self.canvas.offsetLeft - windowOffset.x
                     </div>
                     <div id="item-editor-layer" class="layer"></div>
                 </div>
+
+//html 107行以下
+ <div>
+                                <img data-bind="attr: {src: 'images/layout/' + key + '.png'}" />
+                                </div>

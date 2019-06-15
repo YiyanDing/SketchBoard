@@ -183,8 +183,7 @@ define('data',['storage'], function (storage) {
             {key: 'picture-right', title: 'Right-sketch', layout: 'double', typeMap: {title: 'text', content: 'text', content2: 'img'}}
             // {key: 'video', title: 'Youku Video', layout: 'imax', typeMap: {title: 'text', content: 'video'}}
         ];
-    var tmplList = [
-    ];
+  
     var layoutList = [
             {key: 'normal', title: 'Normal'},
             {key: 'title', title: 'Title'},
@@ -245,7 +244,7 @@ define('data',['storage'], function (storage) {
         title: '',
         slides: [
             {sid: 'A', layout: 'title', items: {title: {type: 'text', value: 'Homepage'}, content: {type: 'text', value: '介绍写这里'}}},
-           // {sid: 'B', layout: 'normal', items: {title: {type: 'text', value: 'Body'}, content: {type: 'text', value: '正文内容.'}}},
+            {sid: 'B', layout: 'normal', items: {title: {type: 'text', value: 'Body'}, content: {type: 'text', value: '正文内容.'}}},
             //{sid: 'C', layout: 'imax', items: {title: {type: 'text', value: 'EndPage'}, content: {type: 'img', value: ''}}}
             // {sid: 'D', template: 'video', layout: 'imax', items: {title: {type: 'text', value: 'Video'}, content: {type: 'video', value: 'XNjUwODE1Mg=='}}}
         ]
@@ -734,6 +733,37 @@ define('page',['data','design'], function (dataManager,designManager) {
                 //暂时：保存前一个页面信息不失真
                 page = vm.pageList.splice($index, 1)[0];
                 vm.pageList.splice($index, 0, page);
+
+                dataManager.save();
+                AddPageListMenu(vm);
+            };
+            vm.addMorePage = function () {
+                var $index;
+                var page;
+                var slideList;
+                var slide;
+                var sid = (new Date).toString();
+                var _main2 = function() {
+                    var board2 = new Board2();
+                    // if(window.location.pathname.slice(1).length > 0) {
+                    //   wsClient.initSocket(window.location.pathname.slice(1))
+                    // }
+                  }
+                  _main2();
+                  console.log('sketchinggggggg')
+                $index = vm.currentPage();
+                page = JSON.stringify(vm.pageList.slice($index, $index + 1)[0]);
+                page.sid = sid;
+                page = JSON.parse(page);
+                vm.pageList.splice($index + 1, 0, page);
+
+                slideList = dataManager.getSlideList();
+                slide = JSON.stringify(dataManager.getSlide($index));
+                slide.sid = sid;
+                slide = JSON.parse(slide);
+                slideList.splice($index + 1, 0, slide);
+
+                vm.currentPage($index + 1);
 
                 dataManager.save();
                 AddPageListMenu(vm);

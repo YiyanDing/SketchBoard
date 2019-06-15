@@ -3,7 +3,7 @@ class Board {
 
   constructor() {
     //Dom 对象
-    this.canvas = createHiDPICanvas(800,1000)
+    this.canvas = createHiDPICanvas(800,500)
     //this.canvas = createHiDPICanvas(window.innerWidth, window.innerHeight - 60)
     document.getElementById("sketching").appendChild(this.canvas)
     this.clearBtn = sel('#id-clear')
@@ -109,8 +109,11 @@ var pic2 = document.getElementById('showPic');
 var oImgBox = document.createElement("img");
     oImgBox.setAttribute("id", "imgBox");
    oImgBox.setAttribute("src",strDateUrl);
-   oImgBox.setAttribute("width","300px");
-   oImgBox.setAttribute("height","300px");
+   oImgBox.setAttribute("width","200px");
+   oImgBox.setAttribute("height","200px");
+   oImgBox.setAttribute("position","absolute");
+   oImgBox.setAttribute("margin-left","20px");
+  // oImgBox.setAttribute("right","50%");
    var tmpShowList = document.getElementById('my-tem-list');
    insertAfter(oImgBox, tmpShowList);
    document.getElementById('descriptionText').style.display="none";

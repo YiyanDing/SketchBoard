@@ -20,11 +20,13 @@
 }
 #addTemplate {
 
-    min-height: 800px;
-    height: 800px;
+    height: 600px;
+ 
    
-    overflow: hidden;
-    margin-bottom: 1em;
+
+    position:relative; 
+   overflow-y :scroll;
+   
 }
 .img-item {
     min-height: 200px;
