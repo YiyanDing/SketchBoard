@@ -3,7 +3,33 @@ class Board2 {
 
   constructor() {
     //Dom 对象
-    this.canvas = createHiDPICanvas(595,408)
+    var eidtorSlide = document.getElementsByClassName("slide")
+    this.canvas = document.getElementById("canvas")
+   // this.canvas = createHiDPICanvas(window.innerWidth - 676.5, window.innerHeight - 172)//595
+    this.canvas.setAttribute("id","MainBoard")
+    this.canvas.setAttribute("margin","0")
+    this.canvas.setAttribute("padding","0")
+    this.canvas.setAttribute("overflow","visible")
+    this.canvas.setAttribute("flex-wrap","wrap")
+    this.canvas.setAttribute("id","MainBoard")
+    this.canvas.setAttribute("position","relative")
+    /*this.canvas.setAttribute("-webkit-box-flex",1)
+    this.canvas.setAttribute("-moz-box-flex",1)
+    this.canvas.setAttribute("-ms-box-fle",1)
+    this.canvas.setAttribute("box-flex",1)
+      margin: 0;
+  padding: 0;
+  overflow: visible;
+  display: flex;
+  flex-wrap: wrap;
+  window.innerWidth, window.innerHeight - 60   
+  position: relative;
+margin-left: auto;
+margin-right: auto;
+-webkit-box-flex: 1;
+-moz-box-flex: 1;
+-ms-box-flex: 1;
+box-flex: 1;*/
     //this.canvas = createHiDPICanvas(window.innerWidth, window.innerHeight - 60)
     document.getElementById("editor-slide").appendChild(this.canvas)
     this.clearBtn = sel('#id-clear2')

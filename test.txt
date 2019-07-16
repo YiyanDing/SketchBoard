@@ -7,6 +7,56 @@ var x = touch.clientX - self.canvas.offsetLeft - windowOffset.x
 
 
 
+
+
+
+147 html
+
+ <div id="columns">
+                                    <div class="column" draggable="true"><header>A</header></div>
+                                    <div class="column" draggable="true"><header>B</header></div>
+                                    <div class="column" draggable="true"><header>C</header></div>
+                                    <div class="column" draggable="true"><header>X</header></div>
+                                </div>
+
+
+184 html 
+<div id="canvasDiv2">
+                    <canvas id="canvas2" width="600" height="220" style="border:1px solid #000000;"></canvas>
+               </div>
+
+
+  <script src="js/scripts/drawhistory.js"></script>
+    <script src="js/scripts/board.js"></script>
+    <script src="js/scripts/board2.js"></script>
+    <script src="js/scripts/board3.js"></script>
+    <script src="js/scripts/utilitys.js"></script>
+    <script src="js/scripts/tools/colorManager.js"></script>
+    <script src="js/scripts/tools/pen.js"></script>
+    <script src="js/scripts/tools/eraser.js"></script>
+    <script src="js/scripts/tools/textarea.js"></script>
+   
+    
+    <script src="js/scripts/tools/colorManager.1.js"></script>
+    <script src="js/scripts/tools/pen.1.js"></script>
+    <script src="js/scripts/tools/eraser.1.js"></script>
+    <script src="js/scripts/tools/textarea.1.js"></script>
+
+
+
+177 html    <button onclick="repeatIt()" class="btn-primary">Repeat</button>
+
+
+
+
+
+
+
+465 行html
+ document.getElementsByClassName('submitImage')[0].onclick = function (e) {
+            upload();
+        }
+
 .modal {
   position: fixed;
   top: 10%;
@@ -81,3 +131,425 @@ var x = touch.clientX - self.canvas.offsetLeft - windowOffset.x
  <div>
                                 <img data-bind="attr: {src: 'images/layout/' + key + '.png'}" />
                                 </div>
+
+
+// html 142follow
+<a href="http://www.w3cmm.com">拖动到红色区块打开链接</a>
+                                <div style="width: 200px; height: 200px; float: right; background: red"
+                                id="droptarget"></div>
+                                <div id="output"></div>
+                                <img class="imgBox" draggable="true" src="images/design/default.png" >
+                                <img class="imgBox" draggable="true" src="images/design/party.png" >
+                                <img class="imgBox" draggable="true" src="images/design/pink.png" >
+                                <img class="imgBox" draggable="true" src="WechatIMG287.jpeg" >
+
+// html 537
+ <script>
+            var _main2 = function() {
+              var board2 = new Board2();
+              // if(window.location.pathname.slice(1).length > 0) {
+              //   wsClient.initSocket(window.location.pathname.slice(1))
+              // }
+            }
+            _main2();
+            console.log('sketchinggggggg')
+            </script>  
+
+
+
+
+// html 171
+ <ul class="navvv" id="navvv3">
+                                <!-- 颜色选择 -->
+                                <li class="dropdown2 tooltip2" data-tooltip-title="颜色">
+                                  <a href="#" id="id-color2" class="dropbtn gray2black-hover">
+                                    <i id="id-color-icon2" class="fas fa-paint-brush fa-2x"></i>
+                                  </a>
+                                  <div class="dropdown-content">
+                                    <p class="dropdown-content-item">
+                                      <label for="">Color:</label>
+                                      <input type="radio" class="black" name="color" value="black" checked>
+                                      <input type="radio" class="red" name="color" value="red">
+                                      <input type="radio" class="yellow" name="color" value="yellow">
+                                    </p>
+                                    <p class="dropdown-content-item">
+                                      <input id="id-color-picker2" type="color" value= '#ff0000'>
+                                    </p>
+                                  </div>
+                                </li>
+                                <!-- 画笔 -->
+                                <li class="dropdown2 tooltip2" data-tooltip-title="画笔">
+                                  <a href="#"  id="id-brush2" class="dropbtn gray2black-hover">
+                                    <i class="fas fa-pencil-alt fa-2x"></i>
+                                  </a>
+                                  <div class="dropdown-content">
+                                      <p class="dropdown-content-item">
+                                        <label>Pen size:</label>
+                                        <input type="range" min="1" max="10" value="1" name="line-width"></input>
+                                        <span id="line-width2">0</span>
+                                      </p>
+                                  </div>
+                                </li>
+                              <!-- 文字 -->
+                                <li class="dropdown2 tooltip2" data-tooltip-title="文字">
+                                  <a href="#"  id="id-text2" class="dropbtn gray2black-hover">
+                                    <i class="fas fa-font fa-2x"></i>
+                                  </a>
+                                  <div class="dropdown-content"  for="id-text">
+                                      <p class="dropdown-content-item">
+                                        <label>Font family:</label>
+                                        <select name="font-family">
+                                          <option value="value1" selected>Value 1</option> 
+                                          <option value="value2">Value 2</option>
+                                          <option value="value3">Value 3</option>
+                                        </select>
+                                      </p>
+                                      <p class="dropdown-content-item">
+                                        <span>Can't find the font?</span><br>
+                                        <label for="id-font-name">Font:</label>
+                                        <input type="text" id="id-font-name" required><br>
+                                        <label for="id-font-url">online address：</label>
+                                        <input type="text" id="id-font-url" placeholder="some url" required>
+                                        <input type="submit" id="id-font-submit" value="提交">
+                                      </p>
+                                      <p class="dropdown-content-item">
+                                          <label>Font size:</label>
+                                          <input type="range" min="10" max="60" value="1" step="2" name="font-size"></input>
+                                          <span id="id-font-size">1</span>
+                                      </p>
+                                  </div>
+                                </li>
+                                <!-- 橡皮擦 -->
+                                <li class="dropdown2 tooltip2" data-tooltip-title="橡皮擦">
+                                  <a href="#"  id="id-eraser2" class="dropbtn gray2black-hover">
+                                    <i class="fas fa-eraser fa-2x"></i>
+                                  </a>
+                                  <div class="dropdown-content">
+                                      <p class="dropdown-content-item">
+                                        <label>Eraser Size:</label>
+                                        <input type="range" min="10" max="60" value="1" step="2" name="eraser-size"></input>
+                                        <span id="eraser-size">1</span>
+                                      </p>
+                                  </div>
+                                </li>
+                                <!-- 清空画布 -->
+                                <li class="dropdown2 tooltip2" data-tooltip-title="清空画布">
+                                  <a href="#"  id="id-clear2" class="dropbtn  gray2black-hover">
+                                    <i class="fas fa-trash-alt fa-2x"></i>
+                                  </a>
+                                </li>
+                                <!-- 撤销 -->
+                                <li class="dropdown2 tooltip2" data-tooltip-title="撤销">
+                                  <a href="#"  id="id-undo2" class="dropbtn  gray2black-hover">
+                                    <i class="fas fa-reply fa-2x"></i>
+                                  </a>
+                                </li>
+                                <!-- 恢复 -->
+                                <li class="dropdown2 tooltip2" data-tooltip-title="恢复">
+                                  <a href="#"  id="id-recover2" class="dropbtn  gray2black-hover">
+                                    <i class="fas fa-share fa-2x"></i>
+                                  </a>
+                                </li>
+                              
+                                <!-- 另存为 -->
+                                <li class="dropdown2 tooltip2" data-tooltip-title="另存为">
+                                  <a href="#"  id="id-save2" class="dropbtn gray2black-hover">
+                                    <i class="fas fa-save fa-2x"></i>
+                                  </a>
+                                  <div class="dropdown-content">
+                                    
+                                      <p class="dropdown-content-item">
+                                        <button id="id-save-img2">Download as png</button>
+                                      </p>
+                                  </div>
+                                </li>
+                                <!-- 放大 -->
+                                <li class="dropdown2 tooltip2" data-tooltip-title="放大">
+                                  <a href="#"  id="id-scale2" class="dropbtn gray2black-hover">
+                                    <i class="fas fa-plus fa-2x"></i>
+                                  </a>
+                                </li>
+                                <!-- 缩小 -->
+                                <li class="dropdown2 tooltip2" data-tooltip-title="缩小">
+                                  <a href="#"  id="id-reduce2" class="dropbtn gray2black-hover">
+                                    <i class="fas fa-minus fa-2x"></i>
+                                  </a>
+                                </li>
+                              </ul>
+                            <textarea id="id-textarea2" autofocus class="hide absolute"
+                            placeholder="请输入"></textarea>
+                    <div id="item-editor-layer" class="layer"></div>
+
+
+
+
+
+
+
+
+
+modal dialog 373行body
+  <ul class="navvv" id="navvv2">
+                            <!-- 颜色选择 -->
+                            <li class="dropdown tooltip2" data-tooltip-title="颜色">
+                              <a href="#" id="id-color" class="dropbtn gray2black-hover">
+                                <i id="id-color-icon" class="fas fa-paint-brush fa-2x"></i>
+                              </a>
+                              <div class="dropdown-content">
+                                <p class="dropdown-content-item">
+                                  <label for="">Color:</label>
+                                  <input type="radio" class="black" name="color" value="black" checked>
+                                  <input type="radio" class="red" name="color" value="red">
+                                  <input type="radio" class="yellow" name="color" value="yellow">
+                                </p>
+                                <p class="dropdown-content-item">
+                                  <input id="id-color-picker" type="color" value= '#ff0000'>
+                                </p>
+                              </div>
+                            </li>
+                            <!-- 画笔 -->
+                            <li class="dropdown tooltip2" data-tooltip-title="画笔">
+                              <a href="#"  id="id-brush" class="dropbtn gray2black-hover">
+                                <i class="fas fa-pencil-alt fa-2x"></i>
+                              </a>
+                              <div class="dropdown-content">
+                                  <p class="dropdown-content-item">
+                                    <label>Pen size:</label>
+                                    <input type="range" min="1" max="10" value="1" name="line-width"></input>
+                                    <span id="line-width">0</span>
+                                  </p>
+                              </div>
+                            </li>
+                          <!-- 文字 -->
+                            <li class="dropdown tooltip2" data-tooltip-title="文字">
+                              <a href="#"  id="id-text" class="dropbtn gray2black-hover">
+                                <i class="fas fa-font fa-2x"></i>
+                              </a>
+                              <div class="dropdown-content"  for="id-text">
+                                  <p class="dropdown-content-item">
+                                    <label>Font family:</label>
+                                    <select name="font-family">
+                                      <option value="value1" selected>Value 1</option> 
+                                      <option value="value2">Value 2</option>
+                                      <option value="value3">Value 3</option>
+                                    </select>
+                                  </p>
+                                  <p class="dropdown-content-item">
+                                    <span>Can't find the font?</span><br>
+                                    <label for="id-font-name">Font:</label>
+                                    <input type="text" id="id-font-name" required><br>
+                                    <label for="id-font-url">online address：</label>
+                                    <input type="text" id="id-font-url" placeholder="some url" required>
+                                    <input type="submit" id="id-font-submit" value="提交">
+                                  </p>
+                                  <p class="dropdown-content-item">
+                                      <label>Font size:</label>
+                                      <input type="range" min="10" max="60" value="1" step="2" name="font-size"></input>
+                                      <span id="id-font-size">1</span>
+                                  </p>
+                              </div>
+                            </li>
+                            <!-- 橡皮擦 -->
+                            <li class="dropdown tooltip2" data-tooltip-title="橡皮擦">
+                              <a href="#"  id="id-eraser" class="dropbtn gray2black-hover">
+                                <i class="fas fa-eraser fa-2x"></i>
+                              </a>
+                              <div class="dropdown-content">
+                                  <p class="dropdown-content-item">
+                                    <label>Eraser Size:</label>
+                                    <input type="range" min="10" max="60" value="1" step="2" name="eraser-size"></input>
+                                    <span id="eraser-size">1</span>
+                                  </p>
+                              </div>
+                            </li>
+                            <!-- 清空画布 -->
+                            <li class="dropdown tooltip2" data-tooltip-title="清空画布">
+                              <a href="#"  id="id-clear" class="dropbtn  gray2black-hover">
+                                <i class="fas fa-trash-alt fa-2x"></i>
+                              </a>
+                            </li>
+                            <!-- 撤销 -->
+                            <li class="dropdown tooltip2" data-tooltip-title="撤销">
+                              <a href="#"  id="id-undo" class="dropbtn  gray2black-hover">
+                                <i class="fas fa-reply fa-2x"></i>
+                              </a>
+                            </li>
+                            <!-- 恢复 -->
+                            <li class="dropdown tooltip2" data-tooltip-title="恢复">
+                              <a href="#"  id="id-recover" class="dropbtn  gray2black-hover">
+                                <i class="fas fa-share fa-2x"></i>
+                              </a>
+                            </li>
+                          
+                            <!-- 另存为 -->
+                            <li class="dropdown tooltip2" data-tooltip-title="另存为">
+                              <a href="#"  id="id-save" class="dropbtn gray2black-hover">
+                                <i class="fas fa-save fa-2x"></i>
+                              </a>
+                              <div class="dropdown-content">
+                                
+                                  <p class="dropdown-content-item">
+                                    <button id="id-save-img">Download as png</button>
+                                  </p>
+                              </div>
+                            </li>
+                            <!-- 放大 -->
+                            <li class="dropdown tooltip2" data-tooltip-title="放大">
+                              <a href="#"  id="id-scale" class="dropbtn gray2black-hover">
+                                <i class="fas fa-plus fa-2x"></i>
+                              </a>
+                            </li>
+                            <!-- 缩小 -->
+                            <li class="dropdown tooltip2" data-tooltip-title="缩小">
+                              <a href="#"  id="id-reduce" class="dropbtn gray2black-hover">
+                                <i class="fas fa-minus fa-2x"></i>
+                              </a>
+                            </li>
+                          </ul>
+                        <textarea id="id-textarea" autofocus class="hide absolute"
+                        placeholder="请输入"></textarea>
+
+
+
+
+
+
+
+
+
+
+
+
+
+ <script>
+            var _main = function() {
+              var board = new Board();
+              // if(window.location.pathname.slice(1).length > 0) {
+              //   wsClient.initSocket(window.location.pathname.slice(1))
+              // }
+            }
+            _main();
+            console.log('sketchinggggggg')
+            </script>
+    editor stage ---editor slide 173行
+     <ul class="navvv" id="navvv3">
+                          <!-- 颜色选择 -->
+                          <li class="dropdown2 tooltip2" data-tooltip-title="颜色">
+                            <a href="#" id="id-color2" class="dropbtn gray2black-hover">
+                              <i id="id-color-icon2" class="fas fa-paint-brush fa-2x"></i>
+                            </a>
+                            <div class="dropdown-content">
+                              <p class="dropdown-content-item">
+                                <label for="">Color:</label>
+                                <input type="radio" class="black" name="color" value="black" checked>
+                                <input type="radio" class="red" name="color" value="red">
+                                <input type="radio" class="yellow" name="color" value="yellow">
+                              </p>
+                              <p class="dropdown-content-item">
+                                <input id="id-color-picker2" type="color" value= '#ff0000'>
+                              </p>
+                            </div>
+                          </li>
+                          <!-- 画笔 -->
+                          <li class="dropdown2 tooltip2" data-tooltip-title="画笔">
+                            <a href="#"  id="id-brush2" class="dropbtn gray2black-hover">
+                              <i class="fas fa-pencil-alt fa-2x"></i>
+                            </a>
+                            <div class="dropdown-content">
+                                <p class="dropdown-content-item">
+                                  <label>Pen size:</label>
+                                  <input type="range" min="1" max="10" value="1" name="line-width"></input>
+                                  <span id="line-width2">0</span>
+                                </p>
+                            </div>
+                          </li>
+                        <!-- 文字 -->
+                          <li class="dropdown2 tooltip2" data-tooltip-title="文字">
+                            <a href="#"  id="id-text2" class="dropbtn gray2black-hover">
+                              <i class="fas fa-font fa-2x"></i>
+                            </a>
+                            <div class="dropdown-content"  for="id-text">
+                                <p class="dropdown-content-item">
+                                  <label>Font family:</label>
+                                  <select name="font-family">
+                                    <option value="value1" selected>Value 1</option> 
+                                    <option value="value2">Value 2</option>
+                                    <option value="value3">Value 3</option>
+                                  </select>
+                                </p>
+                                <p class="dropdown-content-item">
+                                  <span>Can't find the font?</span><br>
+                                  <label for="id-font-name">Font:</label>
+                                  <input type="text" id="id-font-name" required><br>
+                                  <label for="id-font-url">online address：</label>
+                                  <input type="text" id="id-font-url" placeholder="some url" required>
+                                  <input type="submit" id="id-font-submit" value="提交">
+                                </p>
+                                <p class="dropdown-content-item">
+                                    <label>Font size:</label>
+                                    <input type="range" min="10" max="60" value="1" step="2" name="font-size"></input>
+                                    <span id="id-font-size">1</span>
+                                </p>
+                            </div>
+                          </li>
+                          <!-- 橡皮擦 -->
+                          <li class="dropdown2 tooltip2" data-tooltip-title="橡皮擦">
+                            <a href="#"  id="id-eraser2" class="dropbtn gray2black-hover">
+                              <i class="fas fa-eraser fa-2x"></i>
+                            </a>
+                            <div class="dropdown-content">
+                                <p class="dropdown-content-item">
+                                  <label>Eraser Size:</label>
+                                  <input type="range" min="10" max="60" value="1" step="2" name="eraser-size"></input>
+                                  <span id="eraser-size">1</span>
+                                </p>
+                            </div>
+                          </li>
+                          <!-- 清空画布 -->
+                          <li class="dropdown2 tooltip2" data-tooltip-title="清空画布">
+                            <a href="#"  id="id-clear2" class="dropbtn  gray2black-hover">
+                              <i class="fas fa-trash-alt fa-2x"></i>
+                            </a>
+                          </li>
+                          <!-- 撤销 -->
+                          <li class="dropdown2 tooltip2" data-tooltip-title="撤销">
+                            <a href="#"  id="id-undo2" class="dropbtn  gray2black-hover">
+                              <i class="fas fa-reply fa-2x"></i>
+                            </a>
+                          </li>
+                          <!-- 恢复 -->
+                          <li class="dropdown2 tooltip2" data-tooltip-title="恢复">
+                            <a href="#"  id="id-recover2" class="dropbtn  gray2black-hover">
+                              <i class="fas fa-share fa-2x"></i>
+                            </a>
+                          </li>
+                        
+                          <!-- 另存为 -->
+                          <li class="dropdown2 tooltip2" data-tooltip-title="另存为">
+                            <a href="#"  id="id-save2" class="dropbtn gray2black-hover">
+                              <i class="fas fa-save fa-2x"></i>
+                            </a>
+                            <div class="dropdown-content">
+                              
+                                <p class="dropdown-content-item">
+                                  <button id="id-save-img2">Download as png</button>
+                                </p>
+                            </div>
+                          </li>
+                          <!-- 放大 -->
+                          <li class="dropdown2 tooltip2" data-tooltip-title="放大">
+                            <a href="#"  id="id-scale2" class="dropbtn gray2black-hover">
+                              <i class="fas fa-plus fa-2x"></i>
+                            </a>
+                          </li>
+                          <!-- 缩小 -->
+                          <li class="dropdown2 tooltip2" data-tooltip-title="缩小">
+                            <a href="#"  id="id-reduce2" class="dropbtn gray2black-hover">
+                              <i class="fas fa-minus fa-2x"></i>
+                            </a>
+                          </li>
+                        </ul>
+                      <textarea id="id-textarea2" autofocus class="hide absolute"
+                      placeholder="请输入"></textarea>
+              <div id="item-editor-layer" class="layer"></div></div>
+

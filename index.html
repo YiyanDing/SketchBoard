@@ -5,6 +5,8 @@
 
     <meta charset="utf-8">
     <meta name="apple-mobile-web-app-capable" content="yes">
+
+   
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1">
     <title>Sketch Live Presentation</title>
     <link rel="stylesheet" href="lib/css/bootstrap.css">
@@ -21,12 +23,26 @@
   <link rel="stylesheet" href="css/style/styles.css">
   <link rel="stylesheet" href="css/style/tooltip.css">
   <link rel="stylesheet" href="css/style/chatroom.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+  <script src="http://cdn.jsdelivr.net/g/filesaver.js"></script>
  
 
-  
+<!-- Wijmo -->
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
+<link href="http://cdn.wijmo.com/5.latest/styles/wijmo.min.css" rel="stylesheet" type="text/css" />
+<script src="http://cdn.wijmo.com/5.latest/controls/wijmo.min.js" type="text/javascript"></script>
+<script src="http://cdn.wijmo.com/5.latest/controls/wijmo.input.min.js" type="text/javascript"></script>
+<script src="http://cdn.wijmo.com/5.latest/controls/wijmo.grid.min.js" type="text/javascript"></script>
+<script src="http://cdn.wijmo.com/5.latest/controls/wijmo.grid.filter.min.js" type="text/javascript"></script>
+<script src="http://cdn.wijmo.com/5.latest/controls/wijmo.grid.grouppanel.min.js" type="text/javascript"></script>
+<script src="http://cdn.wijmo.com/5.latest/controls/wijmo.olap.min.js" type="text/javascript"></script>
+  <!-- Wijmo-Angular interop -->
+  <script src="http://cdn.wijmo.com/5.latest/interop/angular/wijmo.angular.min.js" type="text/javascript"></script>
+ 
 </head>
 
-<body>
+<body ng-app="app" ng-controller="appCtrl">
 
     <div id="editor" class="window">
         <div id="topbar" class="navbar margin-bottom-0">
@@ -64,13 +80,10 @@
                     </li>
                     <li><a href="#" id="remove-btn"><i class="icon-remove"></i>Remove</a></li>
                     <li>
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <i class="icon-play"></i> Preview <b class="caret"></b>
+                        <a id="newPage" target="_Blank" >
+                            <i class="icon-play" ></i> Preview 
                         </a>
-                        <ul class="dropdown-menu pull-right">
-                            <li><a href="#" id="preview-btn">Start from first page</a></li>
-                            <li><a href="#" id="preview-current-btn">Start from current page</a></li>
-                        </ul>
+                        
                     </li>
                 </ul>
             </div>
@@ -88,22 +101,22 @@
             </ul>
         </div>
 
-        <div id="content">
+        <div id="content" class="container">
             <div id="sidebar" class="span3 margin-left-0 width-240">
                 <div id="page-nav">
-                    <div id="mypagebar" class="clearfix">
-                        <div class="btn-group">
-                            <!-- data-bind="click:addPage.bind($data,currentLayout())" -->
-                            <button class="btn" data-bind="click: addMorePage"><i class="icon-plus"></i></button>
-                            <button class="btn" data-bind="click: clonePage"><i class="icon-file"></i></button>
-                            <button class="btn" data-bind="click: moveUpPage"><i class="icon-arrow-up"></i></button>
-                            <button class="btn" data-bind="click: moveDownPage"><i class="icon-arrow-down"></i></button>
-                            <button class="btn" data-bind="click: removePage"><i class="icon-trash"></i></button>
-                        </div>
-                    </div>
+                        <div id="mypagebar" class="clearfix">
+                                <div class="btn-group">
+                                        <!-- data-bind="click:addPage.bind($data,currentLayout())" -->
+                                        <button class="btn" data-bind="click: addPage"><i class="icon-plus"></i></button>
+                                       
+                                        <button class="btn" data-bind="click: moveUpPage"><i class="icon-arrow-up"></i></button>
+                                        <button class="btn" data-bind="click: moveDownPage"><i class="icon-arrow-down"></i></button>
+                                        <button class="btn" data-bind="click: removePage"><i class="icon-trash"></i></button>
+                                    </div>
+                      </div>
                     <div id="page-list-wrapper">
                         <ul id="page-list" class="nav nav-tabs nav-stacked" data-bind="foreach: pageList">
-                            <li data-bind="css: {active: $index() == $root.currentPage()}, click: $parent.clickPage">
+                            <li data-bind="css: {active: $index() == $root.currentPage()}">
                                
                                 <a href="#" data-bind="text: ($index()+1) + '、' + (title || 'New Page')"></a>
                             </li>
@@ -125,21 +138,24 @@
                     <div class="tab-content" >
                         <div class="tab-pane active" id="my-tem-panel" >
                                 <div id="addTemplate"  >
+                                    
                             <ul id="my-tem-list">
-                     
+                    
                               <p id="descriptionText"> Add your first template!</p>
                               <a href="#theme-manager" data-toggle="modal" style="margin: 25px"><i class="icon-pencil"></i>
                                 <input type="button" value="Add Templates" style="margin: 8px"></a>
+                               
+                               
                             </ul>
                         </div>
                           
                         </div>
-                        <div class="tab-pane" id="tem-local-panel" style="position:relative; height:auto!important; height:500px;  overflow-y :scroll; overflow-x: hidden">
+                        <div class="tab-pane" id="tem-local-panel" >
                            
                             <div id="uploadImage" >
 
                             </div>
-                            <button class="submitImage btn-primary">submit</button>
+                           
                         </div>
                 
                     </div>
@@ -152,129 +168,24 @@
                     </div>
             </div>
             <div id="editor-stage" class="stage" >
-
-                <div id="editor-slide" class="slide"  >
-                        <ul class="navvv" id="navvv3">
-                                <!-- 颜色选择 -->
-                                <li class="dropdown2 tooltip2" data-tooltip-title="颜色">
-                                  <a href="#" id="id-color2" class="dropbtn gray2black-hover">
-                                    <i id="id-color-icon2" class="fas fa-paint-brush fa-2x"></i>
-                                  </a>
-                                  <div class="dropdown-content">
-                                    <p class="dropdown-content-item">
-                                      <label for="">Color:</label>
-                                      <input type="radio" class="black" name="color" value="black" checked>
-                                      <input type="radio" class="red" name="color" value="red">
-                                      <input type="radio" class="yellow" name="color" value="yellow">
-                                    </p>
-                                    <p class="dropdown-content-item">
-                                      <input id="id-color-picker2" type="color" value= '#ff0000'>
-                                    </p>
-                                  </div>
-                                </li>
-                                <!-- 画笔 -->
-                                <li class="dropdown2 tooltip2" data-tooltip-title="画笔">
-                                  <a href="#"  id="id-brush2" class="dropbtn gray2black-hover">
-                                    <i class="fas fa-pencil-alt fa-2x"></i>
-                                  </a>
-                                  <div class="dropdown-content">
-                                      <p class="dropdown-content-item">
-                                        <label>Pen size:</label>
-                                        <input type="range" min="1" max="10" value="1" name="line-width"></input>
-                                        <span id="line-width2">0</span>
-                                      </p>
-                                  </div>
-                                </li>
-                              <!-- 文字 -->
-                                <li class="dropdown2 tooltip2" data-tooltip-title="文字">
-                                  <a href="#"  id="id-text2" class="dropbtn gray2black-hover">
-                                    <i class="fas fa-font fa-2x"></i>
-                                  </a>
-                                  <div class="dropdown-content"  for="id-text">
-                                      <p class="dropdown-content-item">
-                                        <label>Font family:</label>
-                                        <select name="font-family">
-                                          <option value="value1" selected>Value 1</option> 
-                                          <option value="value2">Value 2</option>
-                                          <option value="value3">Value 3</option>
-                                        </select>
-                                      </p>
-                                      <p class="dropdown-content-item">
-                                        <span>Can't find the font?</span><br>
-                                        <label for="id-font-name">Font:</label>
-                                        <input type="text" id="id-font-name" required><br>
-                                        <label for="id-font-url">online address：</label>
-                                        <input type="text" id="id-font-url" placeholder="some url" required>
-                                        <input type="submit" id="id-font-submit" value="提交">
-                                      </p>
-                                      <p class="dropdown-content-item">
-                                          <label>Font size:</label>
-                                          <input type="range" min="10" max="60" value="1" step="2" name="font-size"></input>
-                                          <span id="id-font-size">1</span>
-                                      </p>
-                                  </div>
-                                </li>
-                                <!-- 橡皮擦 -->
-                                <li class="dropdown2 tooltip2" data-tooltip-title="橡皮擦">
-                                  <a href="#"  id="id-eraser2" class="dropbtn gray2black-hover">
-                                    <i class="fas fa-eraser fa-2x"></i>
-                                  </a>
-                                  <div class="dropdown-content">
-                                      <p class="dropdown-content-item">
-                                        <label>Eraser Size:</label>
-                                        <input type="range" min="10" max="60" value="1" step="2" name="eraser-size"></input>
-                                        <span id="eraser-size">1</span>
-                                      </p>
-                                  </div>
-                                </li>
-                                <!-- 清空画布 -->
-                                <li class="dropdown2 tooltip2" data-tooltip-title="清空画布">
-                                  <a href="#"  id="id-clear2" class="dropbtn  gray2black-hover">
-                                    <i class="fas fa-trash-alt fa-2x"></i>
-                                  </a>
-                                </li>
-                                <!-- 撤销 -->
-                                <li class="dropdown2 tooltip2" data-tooltip-title="撤销">
-                                  <a href="#"  id="id-undo2" class="dropbtn  gray2black-hover">
-                                    <i class="fas fa-reply fa-2x"></i>
-                                  </a>
-                                </li>
-                                <!-- 恢复 -->
-                                <li class="dropdown2 tooltip2" data-tooltip-title="恢复">
-                                  <a href="#"  id="id-recover2" class="dropbtn  gray2black-hover">
-                                    <i class="fas fa-share fa-2x"></i>
-                                  </a>
-                                </li>
+              
+                <div id="editor-slide" class="slide" >
+                       
                               
-                                <!-- 另存为 -->
-                                <li class="dropdown2 tooltip2" data-tooltip-title="另存为">
-                                  <a href="#"  id="id-save2" class="dropbtn gray2black-hover">
-                                    <i class="fas fa-save fa-2x"></i>
-                                  </a>
-                                  <div class="dropdown-content">
-                                    
-                                      <p class="dropdown-content-item">
-                                        <button id="id-save-img2">Download as png</button>
-                                      </p>
-                                  </div>
-                                </li>
-                                <!-- 放大 -->
-                                <li class="dropdown2 tooltip2" data-tooltip-title="放大">
-                                  <a href="#"  id="id-scale2" class="dropbtn gray2black-hover">
-                                    <i class="fas fa-plus fa-2x"></i>
-                                  </a>
-                                </li>
-                                <!-- 缩小 -->
-                                <li class="dropdown2 tooltip2" data-tooltip-title="缩小">
-                                  <a href="#"  id="id-reduce2" class="dropbtn gray2black-hover">
-                                    <i class="fas fa-minus fa-2x"></i>
-                                  </a>
-                                </li>
-                              </ul>
-                            <textarea id="id-textarea2" autofocus class="hide absolute"
-                            placeholder="请输入"></textarea>
-                    <div id="item-editor-layer" class="layer"></div>
-                </div>
+                          
+                    <div id="newBoard" >
+                        
+                        <div id="canvasDiv"   class="output" draggable="true"  >
+                    <canvas id="mainBoard" width="700" height="600" draggable="true" style="border:1px solid #000000;"></canvas>
+                  </div>
+                
+                   
+                    <input type="file" id="fileinput"/>
+                   
+                    <br>
+                    
+                  </div>
+                  
             </div>
             <ul class="dropdown-menu" id="myEditorMenu">
                 <li><a href="#" id="myEditorMenuAdd">插入新页面</a></li>
@@ -314,7 +225,9 @@
         </ul>
     </div>
 
+  
     <div id="modals" class="layer">
+      
         <div id="template-dialog" class="modal hide fade">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">×</button>
@@ -344,130 +257,43 @@
                 <h4>Sketching Here!</h4>
             
             </div>
-            <div class="modal-body" id="sketching">
-
-             
-                    <ul class="navvv" id="navvv2">
-                            <!-- 颜色选择 -->
-                            <li class="dropdown tooltip2" data-tooltip-title="颜色">
-                              <a href="#" id="id-color" class="dropbtn gray2black-hover">
-                                <i id="id-color-icon" class="fas fa-paint-brush fa-2x"></i>
-                              </a>
-                              <div class="dropdown-content">
-                                <p class="dropdown-content-item">
-                                  <label for="">Color:</label>
-                                  <input type="radio" class="black" name="color" value="black" checked>
-                                  <input type="radio" class="red" name="color" value="red">
-                                  <input type="radio" class="yellow" name="color" value="yellow">
-                                </p>
-                                <p class="dropdown-content-item">
-                                  <input id="id-color-picker" type="color" value= '#ff0000'>
-                                </p>
-                              </div>
-                            </li>
-                            <!-- 画笔 -->
-                            <li class="dropdown tooltip2" data-tooltip-title="画笔">
-                              <a href="#"  id="id-brush" class="dropbtn gray2black-hover">
-                                <i class="fas fa-pencil-alt fa-2x"></i>
-                              </a>
-                              <div class="dropdown-content">
-                                  <p class="dropdown-content-item">
-                                    <label>Pen size:</label>
-                                    <input type="range" min="1" max="10" value="1" name="line-width"></input>
-                                    <span id="line-width">0</span>
-                                  </p>
-                              </div>
-                            </li>
-                          <!-- 文字 -->
-                            <li class="dropdown tooltip2" data-tooltip-title="文字">
-                              <a href="#"  id="id-text" class="dropbtn gray2black-hover">
-                                <i class="fas fa-font fa-2x"></i>
-                              </a>
-                              <div class="dropdown-content"  for="id-text">
-                                  <p class="dropdown-content-item">
-                                    <label>Font family:</label>
-                                    <select name="font-family">
-                                      <option value="value1" selected>Value 1</option> 
-                                      <option value="value2">Value 2</option>
-                                      <option value="value3">Value 3</option>
-                                    </select>
-                                  </p>
-                                  <p class="dropdown-content-item">
-                                    <span>Can't find the font?</span><br>
-                                    <label for="id-font-name">Font:</label>
-                                    <input type="text" id="id-font-name" required><br>
-                                    <label for="id-font-url">online address：</label>
-                                    <input type="text" id="id-font-url" placeholder="some url" required>
-                                    <input type="submit" id="id-font-submit" value="提交">
-                                  </p>
-                                  <p class="dropdown-content-item">
-                                      <label>Font size:</label>
-                                      <input type="range" min="10" max="60" value="1" step="2" name="font-size"></input>
-                                      <span id="id-font-size">1</span>
-                                  </p>
-                              </div>
-                            </li>
-                            <!-- 橡皮擦 -->
-                            <li class="dropdown tooltip2" data-tooltip-title="橡皮擦">
-                              <a href="#"  id="id-eraser" class="dropbtn gray2black-hover">
-                                <i class="fas fa-eraser fa-2x"></i>
-                              </a>
-                              <div class="dropdown-content">
-                                  <p class="dropdown-content-item">
-                                    <label>Eraser Size:</label>
-                                    <input type="range" min="10" max="60" value="1" step="2" name="eraser-size"></input>
-                                    <span id="eraser-size">1</span>
-                                  </p>
-                              </div>
-                            </li>
-                            <!-- 清空画布 -->
-                            <li class="dropdown tooltip2" data-tooltip-title="清空画布">
-                              <a href="#"  id="id-clear" class="dropbtn  gray2black-hover">
-                                <i class="fas fa-trash-alt fa-2x"></i>
-                              </a>
-                            </li>
-                            <!-- 撤销 -->
-                            <li class="dropdown tooltip2" data-tooltip-title="撤销">
-                              <a href="#"  id="id-undo" class="dropbtn  gray2black-hover">
-                                <i class="fas fa-reply fa-2x"></i>
-                              </a>
-                            </li>
-                            <!-- 恢复 -->
-                            <li class="dropdown tooltip2" data-tooltip-title="恢复">
-                              <a href="#"  id="id-recover" class="dropbtn  gray2black-hover">
-                                <i class="fas fa-share fa-2x"></i>
-                              </a>
-                            </li>
-                          
-                            <!-- 另存为 -->
-                            <li class="dropdown tooltip2" data-tooltip-title="另存为">
-                              <a href="#"  id="id-save" class="dropbtn gray2black-hover">
-                                <i class="fas fa-save fa-2x"></i>
-                              </a>
-                              <div class="dropdown-content">
-                                
-                                  <p class="dropdown-content-item">
-                                    <button id="id-save-img">Download as png</button>
-                                  </p>
-                              </div>
-                            </li>
-                            <!-- 放大 -->
-                            <li class="dropdown tooltip2" data-tooltip-title="放大">
-                              <a href="#"  id="id-scale" class="dropbtn gray2black-hover">
-                                <i class="fas fa-plus fa-2x"></i>
-                              </a>
-                            </li>
-                            <!-- 缩小 -->
-                            <li class="dropdown tooltip2" data-tooltip-title="缩小">
-                              <a href="#"  id="id-reduce" class="dropbtn gray2black-hover">
-                                <i class="fas fa-minus fa-2x"></i>
-                              </a>
-                            </li>
-                          </ul>
-                        <textarea id="id-textarea" autofocus class="hide absolute"
-                        placeholder="请输入"></textarea>
+            <ul class="navvv" id="navvv3">
+                <li >
+                    <a href="#" id="id-color2" class="dropbtn gray2black-hover">
+                      <i id="id-color-icon2" class="fas fa-paint-brush fa-2x"></i>
+                      <input type="radio" class="black" id="blackpen" name="color" value="black" checked>
+                    <input type="radio" class="red"  id="redpen" name="color" value="red">
+                    <input type="radio" class="yellow" id="yellowpen" name="color" value="yellow">
+                    </a>
                     
+                  </li>
+               <li>
+                    <a href="#"  id="id-brush" class="dropbtn gray2black-hover">
+                            <i class="fas fa-pencil-alt fa-2x"></i>
+                            <input type="range" min="1" max="10" value="1" id="sketchWidth" name="line-width"></input>
+                            <span id="line-width">0</span>
+                          </a>
+
+                   </li>
+                    <li class="dropdown2 tooltip2" data-tooltip-title="清空画布">
+                        <a href="#"  id="id-clear2" class="dropbtn  gray2black-hover">
+                          <i class="fas fa-trash-alt fa-2x"></i>
+                        </a>
+                      </li>
+                      </ul>
+              
+            <div class="modal-body" id="sketching"> 
+
+              <div>       
+             <div id="tempDiv">
+                  <canvas id="tempBoard" width="800" height="500" style="border:1px solid #000000;"></canvas>
+                </div>
+         
+             
                   
+                  <br>
+   
+            </div>
             </div>
             <div class="modal-footer">
                 <button class="btn btn-primary" data-dismiss="modal" id="saveTo">Save to template</button>
@@ -606,39 +432,8 @@
     </div>
     
 
-    
-    <script src="js/scripts/drawhistory.js"></script>
-    <script src="js/scripts/board.js"></script>
-    <script src="js/scripts/board2.js"></script>
-    <script src="js/scripts/utilitys.js"></script>
-    <script src="js/scripts/tools/colorManager.js"></script>
-    <script src="js/scripts/tools/pen.js"></script>
-    <script src="js/scripts/tools/eraser.js"></script>
-    <script src="js/scripts/tools/textarea.js"></script>
-    <script>
-            var _main = function() {
-              var board = new Board();
-              // if(window.location.pathname.slice(1).length > 0) {
-              //   wsClient.initSocket(window.location.pathname.slice(1))
-              // }
-            }
-            _main();
-            console.log('sketchinggggggg')
-            </script>
-             <script src="js/scripts/tools/colorManager.1.js"></script>
-             <script src="js/scripts/tools/pen.1.js"></script>
-             <script src="js/scripts/tools/eraser.1.js"></script>
-             <script src="js/scripts/tools/textarea.1.js"></script>
-      <script>
-            var _main2 = function() {
-              var board2 = new Board2();
-              // if(window.location.pathname.slice(1).length > 0) {
-              //   wsClient.initSocket(window.location.pathname.slice(1))
-              // }
-            }
-            _main2();
-            console.log('sketchinggggggg')
-            </script>  
+           
+     
     <script id="ctrl-template" type="text/template">
         <div class="ctrl">
             <a href="#" class="ctrl-start"></a>
@@ -651,6 +446,9 @@
     </script>
     <script src="js/tinyImgUpload.js"></script>
     <script>
+         document.getElementById('newPage').onclick= function(){
+             window.open('preview.html');
+         }
         //document.documentElement.style.fontSize = document.documentElement.clientWidth*0.1+'px';
         
         var options = {
@@ -664,14 +462,18 @@
         }
         
         var upload = tinyImgUpload('#uploadImage', options);
-        document.getElementsByClassName('submitImage')[0].onclick = function (e) {
+       
             upload();
-        }
+           
+      
+       
         </script>
     
    
     <script src="lib/js/jquery.js"></script>
     <script src="lib/js/bootstrap.js"></script>
+    <script src="js/scripts/board3.js"></script>
+    <script src="js/scripts/board4.js"></script>
     
     <script src="lib/js/knockout-2.2.1.js"></script>
     <script src="lib/js/highlight.min.js"></script>
@@ -682,10 +484,12 @@
     
     <script src="js/adjust.js"></script>
 
+    <script src="js/DragDropTouch.js"></script>
+    <script src="js/scripts/app.js"></script>
    
-    
     <script data-main="js/main" src="js/require.js"></script>
-   
+  
+    
 </body>
 
 

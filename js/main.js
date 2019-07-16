@@ -243,7 +243,7 @@ define('data',['storage'], function (storage) {
         transition: 'horizontal',
         title: '',
         slides: [
-            {sid: 'A', layout: 'title', items: {title: {type: 'text', value: 'Homepage'}, content: {type: 'text', value: '介绍写这里'}}},
+            {sid: 'A', layout: 'title', items: {title: {type: 'text', value: 'Homepage'}, content: {type: 'img', value: document.getElementById('canvasDiv')}}},
             {sid: 'B', layout: 'normal', items: {title: {type: 'text', value: 'Body'}, content: {type: 'text', value: '正文内容.'}}},
             //{sid: 'C', layout: 'imax', items: {title: {type: 'text', value: 'EndPage'}, content: {type: 'img', value: ''}}}
             // {sid: 'D', template: 'video', layout: 'imax', items: {title: {type: 'text', value: 'Video'}, content: {type: 'video', value: 'XNjUwODE1Mg=='}}}
@@ -387,9 +387,12 @@ define('data',['storage'], function (storage) {
 
         getPageList: function () {
             var list = [];
+ 
+           
             data.slides.forEach(function (slideData) {
                 //去除标题的html标签
-                list.push({sid: slideData.sid, title: $.removeHtml(slideData.items.title.value), key: slideData.layout});
+                //list.push({sid: slideData.sid, title: $.removeHtml(slideData.items), key: slideData.layout});
+                list.push({sid: slideData.sid,title: $.removeHtml(slideData.items)});
 	    });            
 	    return list;        
 	},
@@ -440,38 +443,7 @@ define('data',['storage'], function (storage) {
             // var key = JSON.prase(layout).key;
             $("#page-list").find(".active").find("img").attr("src",'images/layout/' + layout + '.png');
         },
-        // changeTemplate: function (page, template, ignoreTypeChange) {
-        //     var slideData = data.slides[page] || {};
-        //     var tplData = manager.getTplByKey(template);
-        //     var hasNewLayout = (slideData.layout != tplData.layout);
-        //     var changedKeys = [];
-
-        //     slideData.template = template;
-
-        //     if (hasNewLayout) {
-        //         slideData.layout = tplData.layout;
-        //     }
-
-        //     $.each(tplData.typeMap, function (key, type) {
-        //         var itemData = slideData.items[key];
-
-        //         if (!itemData) {
-        //             slideData.items[key] = itemData = {};
-        //         }
-        //         if (hasNewLayout) {
-        //             itemData.position = {};
-        //         }
-        //         if (!itemData.value) {
-        //             if (!ignoreTypeChange) {
-        //                 itemData.type = type;
-        //             }
-        //             itemData.config = {};
-        //             changedKeys.push(key);
-        //         }
-        //     });
-
-        //     return changedKeys;
-        // },
+       
         changeType: function (page, key, type) {
             var slideData = data.slides[page] || {};
             var itemData = slideData.items[key];
@@ -555,7 +527,7 @@ define('data',['storage'], function (storage) {
     return manager;
 });
 define('vm',['data'], function (dataManager) {
-    var currentPage = 0;
+    var currentPage =0;
     var currentSlide = dataManager.getSlideList()[currentPage];
 
     var vm = {
@@ -617,6 +589,15 @@ define('title',['data'], function (dataManager) {
         }
     };
 });
+var clickX = new Array();
+var clickY = new Array();
+var clickDrag = new Array(); //Records mouse drag event (T/F)
+var clickTimeStamp = new Array();
+var sketch;
+var j=1;
+var clickX_original;
+var clickY_original;
+var loop_id;
 define('page',['data','design'], function (dataManager,designManager) {
     function AddPageListMenu(vm){
         $("#page-list").find('li').each(function(index, el) {
@@ -660,6 +641,13 @@ define('page',['data','design'], function (dataManager,designManager) {
                 //暂时：保存前一个页面信息不失真
                 page = vm.pageList.splice(beforeIndex, 1)[0];
                 vm.pageList.splice(beforeIndex, 0, page);
+             
+               // clearMainBoard();
+               clearMainBoard(); 
+               strokeReplay();
+               
+           
+
 
                 AddPageListMenu(vm);
             };
@@ -670,7 +658,11 @@ define('page',['data','design'], function (dataManager,designManager) {
                     //暂时：保存前一个页面信息不失真
                     page = vm.pageList.splice($index, 1)[0];
                     vm.pageList.splice($index, 0, page);
-
+                 
+              var context = document.getElementById('mainBoard').getContext("2d");
+              context.save();
+              redraw(context);
+                 repeatIt();
                     AddPageListMenu(vm);
                 }
             };
@@ -681,11 +673,15 @@ define('page',['data','design'], function (dataManager,designManager) {
                     //暂时：保存前一个页面信息不失真
                     page = vm.pageList.splice($index, 1)[0];
                     vm.pageList.splice($index, 0, page);
-
+                          
+              var context = document.getElementById('mainBoard').getContext("2d");
+              context.restore();
+              redraw(context);
+                 repeatIt();
                     AddPageListMenu(vm);
                 }
             };
-            vm.addPage = function (templateData) {
+            vm.addPage = function () {
                 var $index;
                 var slideList;
                 var slide;
@@ -693,28 +689,19 @@ define('page',['data','design'], function (dataManager,designManager) {
                 //改为时间戳
                 //var sid = (new Date).toString();
                 var sid = Date.parse(new Date).toString();
-
-                templateData = templateData || { key: 'normal', title: 'Normal', layout: 'normal', typeMap: { title: 'text', content: 'text' } };
-                
-                //修改的地方
-                if (typeof (templateData) == 'string') {
-                    $.each(dataManager.getTplList(), function (key, template) {
-                        if (template.layout == templateData) {
-                            templateData = template;
-                        }
-                    });
-                }
-
+           
                 $index = vm.currentPage();
 
-                vm.pageList.splice($index + 1, 0, {sid: sid, title: '', key: templateData.layout});
+                vm.pageList.splice($index + 1, 0, {sid: sid, title: '', key: ''});
 
 
                 slideList = dataManager.getSlideList();
                 slide = {
                         sid: sid,
-                        layout: templateData.layout,
-                        items: {}
+                       // layout: templateData.layout,
+                        items: {
+                            content: {type: 'img', value: document.getElementById('mainBoard').getContext("2d")}
+                        }
                         //template: 'normal',
                         //layout: 'normal',
                         //items: {
@@ -722,10 +709,14 @@ define('page',['data','design'], function (dataManager,designManager) {
                         //    content: {type: 'text', value: ''}
                         //}
                     };
-                $.each(templateData.typeMap, function (key, type) {
-                    slide.items[key] = { type: type, value: '' };
-                });
-
+                    //const context = document.getElementById('mainBoard').getContext("2d");
+                  // context.setTransform(1,0,0,1,0,0);
+                  // context.beginPath();
+                    console.log("called");
+                
+                    //var context2 = document.getElementById('tempBoard').getContext("2d");
+                   // context.clearRect(0, 0, context.canvas.width, context.canvas.height); // Clears the canvas
+                   
                 slideList.splice($index + 1, 0, slide);
 
                 vm.currentPage($index + 1);
@@ -733,29 +724,28 @@ define('page',['data','design'], function (dataManager,designManager) {
                 //暂时：保存前一个页面信息不失真
                 page = vm.pageList.splice($index, 1)[0];
                 vm.pageList.splice($index, 0, page);
-
+         
+                saveStroke();
+                clearMainBoard();
+                
+                //strokeReplay();
+             
                 dataManager.save();
                 AddPageListMenu(vm);
             };
-            vm.addMorePage = function () {
+            /*vm.addMorePage = function () {
                 var $index;
                 var page;
                 var slideList;
                 var slide;
                 var sid = (new Date).toString();
-                var _main2 = function() {
-                    var board2 = new Board2();
-                    // if(window.location.pathname.slice(1).length > 0) {
-                    //   wsClient.initSocket(window.location.pathname.slice(1))
-                    // }
-                  }
-                  _main2();
-                  console.log('sketchinggggggg')
+                
                 $index = vm.currentPage();
                 page = JSON.stringify(vm.pageList.slice($index, $index + 1)[0]);
                 page.sid = sid;
                 page = JSON.parse(page);
                 vm.pageList.splice($index + 1, 0, page);
+               
 
                 slideList = dataManager.getSlideList();
                 slide = JSON.stringify(dataManager.getSlide($index));
@@ -767,7 +757,7 @@ define('page',['data','design'], function (dataManager,designManager) {
 
                 dataManager.save();
                 AddPageListMenu(vm);
-            };
+            };*/
             vm.clonePage = function () {
                 var $index;
                 var page;
@@ -795,7 +785,7 @@ define('page',['data','design'], function (dataManager,designManager) {
             vm.removePage = function () {
                 var $index;
                 var slideList;
-
+                //clearMainBoard();
                 $index = vm.currentPage();
                 if (vm.pageList().length == 1) {
                     return;
@@ -807,6 +797,7 @@ define('page',['data','design'], function (dataManager,designManager) {
 
                 slideList = dataManager.getSlideList();
                 slideList.splice($index, 1);
+             
                 dataManager.save();
                 AddPageListMenu(vm);
             };
@@ -827,7 +818,13 @@ define('page',['data','design'], function (dataManager,designManager) {
                     slideList.splice($index - 1, 0, slide);
 
                     vm.currentPage($index - 1);
-
+                    
+                    clearMainBoard();
+                    strokeReplay();
+                    drawHistory();
+                   
+              
+                
                     dataManager.save();
                     AddPageListMenu(vm);
                 }
@@ -849,7 +846,11 @@ define('page',['data','design'], function (dataManager,designManager) {
                     slideList.splice($index + 1, 0, slide);
 
                     vm.currentPage($index + 1);
+                    //clearMainBoard();
+                    strokeReplay();
 
+                    //var context = document.getElementById('mainBoard').getContext("2d");
+                    //redraw(context);
                     dataManager.save();
                     AddPageListMenu(vm);
                 }
@@ -1540,17 +1541,7 @@ define('types/img',['data', 'vm', 'types/img-helper'], function (dataManager, vm
             render(data, dom, '[Click to add picture]');
             showImg(dom, '[Click to add picture]');
         },
-        resize: function (data, dom) {
-            var src = data.value;
-
-            if (src) {
-                dom.html('');
-                if (src.match(/^media\:\/\//)) {
-                    src = dataManager.readMedia(src.substr(8));
-                }
-                lib.embed(src, dom, '[Click to add picture]');
-            }
-        },
+      
         edit: function (key, page, data, dom) {
             var position = dom.position();
             var width = dom.width();

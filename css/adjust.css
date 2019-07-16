@@ -289,7 +289,13 @@
     -ms-box-orient: vertical;
     box-orient: vertical;
     width: 17.77778%;
-    max-width: 500px; 
+	max-width: 500px; 
+	height: 600px;
+ 
+   
+
+    position:relative; 
+   overflow-y :scroll;
 }
 
 #sidebar2 {

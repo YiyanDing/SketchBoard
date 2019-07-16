@@ -55,6 +55,10 @@ input:checked {
 .yellow {
   background-color: yellow;
 }
+.normal
+{
+  text-emphasis: normal;
+}
 
 .crosshair-cursor {
   cursor: crosshair;

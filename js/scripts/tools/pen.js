@@ -11,7 +11,9 @@ class MovableBlock {
       if(this.isSelected) {
         var x = event.layerX,
             y = event.layerY
+          
         f(x, y)
+    
       }
     })
   }
@@ -59,6 +61,11 @@ class Pen extends MovableBlock{
     this.ctx.beginPath()
     this.ctx.moveTo(x, y)
   }
+ 
+
+
+
+
   drawLine(x, y) {
     if(!this.enableDraw) {
       return false

@@ -1,3 +1,33 @@
+[draggable] {
+    user-select: none;
+}
+.column {
+    height: 150px;
+    width: 150px;
+    display: inline-block;
+    border: 2px solid #666666;
+    background-color: #ccc;
+    margin-right: 5px;
+    border-radius: 10px;
+    box-shadow: inset 0 0 3px #000;
+    text-align: center;
+    cursor: move;
+}
+    .column header {
+        color: #fff;
+        background: radial-gradient(ellipse at center, #000000 0%,#7c7c7c 100%);
+        text-shadow: #000 0 1px;
+        box-shadow: 5px;
+        padding: 5px;
+        border-bottom: 1px solid #ddd;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+        pointer-events: none;
+    }
+    .column.over {
+        border: 2px dashed #000;
+    }
+
 
 .dialogwrap{
     display: none;
@@ -275,6 +305,12 @@
     -ms-box-orient: vertical;
     box-orient: vertical;
     width: 17.77778%;
+    height: 600px;
+ 
+   
+
+    position:relative; 
+   overflow-y :scroll;
     max-width: 240px;
 }
 #sidebar2 {
