@@ -70,7 +70,8 @@ cvs.addEventListener('touchmove', function(e) { e.preventDefault(); }, { passive
 cvs.addEventListener('touchstart', function(e){
     e.preventDefault();
     sketch = true;
-    addClick(event.touches[0].clientX - this.offsetLeft, event.touches[0].clientY - this.offsetTop);
+    var touch = event.touches[0];
+    addClick(touch.clientX - this.offsetLeft  - modalHead.getBoundingClientRect().left, touch.clientY - this.offsetTop   - modalBody.getBoundingClientRect().top );
    // addClick(event.touches[0].pageX - this.offsetLeft - modalHead.getBoundingClientRect().left, event.touches[0].pageY - this.offsetTop - modalBody.getBoundingClientRect().top);
     redraw(context);
     //var coord = event.touches[0].pageX
@@ -80,7 +81,9 @@ cvs.addEventListener('touchmove', function(e){
     e.preventDefault();
     if(sketch){
      // addClick(event.touches[0].pageX - this.offsetLeft, event.touches[0].pageY - this.offsetTop, true);
-     addClick(event.touches[0].clientX - this.offsetLeft, event.touches[0].clientY - this.offsetTop); 
+     //addClick(event.touches[0].clientX - this.offsetLeft, event.touches[0].clientY - this.offsetTop); 
+     var touch = event.touches[0];
+    addClick(touch.clientX - this.offsetLeft  - modalHead.getBoundingClientRect().left, touch.clientY - this.offsetTop   - modalBody.getBoundingClientRect().top );
      redraw(context);
     }
     //var coord = event.touches[0].pageX
