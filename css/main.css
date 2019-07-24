@@ -94,10 +94,9 @@
     -ms-transform-origin: 50% 50%;
     transform-origin: 50% 50%;
 }
-.slide {
+.mainBoard {
     position: relative;
-    font-size: 20px;
-    line-height: 1.5;
+    
     width: 640px;
     height: 480px;
 }
@@ -386,7 +385,7 @@
 
     
 }
-#editor-slide {
+#mainBoard {
     border: 1px silver solid;
     border-radius: 5px;
     position: relative;
@@ -396,9 +395,11 @@
     -moz-box-flex: 1;
     -ms-box-flex: 1;
     box-flex: 1;
-    
-
 }
+
+
+
+
 #editor-slide [data-key] .output {
     border-radius: 5px;
     background-color: rgba(127, 127, 127, 0.05);
