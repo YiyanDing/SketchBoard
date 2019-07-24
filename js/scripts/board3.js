@@ -13,18 +13,8 @@ var curColor = colorBlack;
 var clickColor = new Array();
 
 
-//canvas2 = document.getElementById('canvas2').getContext("2d");
-//var canvasDiv2 = document.getElementById('canvasDiv2');
-/*window.setInterval(record, 1000); 
-function record(){
-  var q = document.getElementById("mainBoard");
-  console.log(q,"errorrrrrr");
-  //document.getElementById("newBoard2").innerHTML = q;
-}*/
-
 $('#mainBoard').mousedown(function(e){
-  //Mouse clicked
-  $('#status_ind').html("<h1>mousedown"+e.pageX+" "+sketch+"</h1>");
+
   sketch = true;
   addClick(event.layerX, event.layerY);
   //addClick(e.pageX - this.offsetLeft, e.pageY - this.offsetTop);
@@ -33,8 +23,7 @@ $('#mainBoard').mousedown(function(e){
 });
 
 $('#mainBoard').mousemove(function(e){
-  //Mouse is moving
-  $('#status_ind').html("<h1>mousemove"+e.pageX+" "+sketch+"</h1>");
+
 if(sketch){ //If mouse was clicked, draw line
   addClick(event.layerX, event.layerY, true);
   //addClick(e.pageX - this.offsetLeft, e.pageY - this.offsetTop, true);
@@ -44,15 +33,13 @@ if(sketch){ //If mouse was clicked, draw line
 });
 
 $('#mainBoard').mouseup(function(e){
-  //If mouse is no longer clicked, do not draw line
-  $('#status_ind').html("<h1>mouseup</h1>")
+  
   sketch = false;
-  //3repeatIt();
+
 });
 
 $('#mainBoard').mouseleave(function(e){
-  //If mouse is pointing outside the canvas, do not draw line
-  $('#status_ind').html("<h1>mouseleave</h1>");
+
   sketch = false;
 });
 var clickX = new Array();
@@ -73,20 +60,10 @@ var clickTimeStamps = new Array();
 
 
 
-var output_json1 = {"clickX":clickX,"clickY":clickY,"clickDrag":clickDrag,"clickTimeStamp":clickTimeStamp};
-localStorage.setItem("test",JSON.stringify(output_json1));
-
-
-
-/*localStorage.setItem("clickX", clickX);
-localStorage.setItem("clickY", clickY);
-localStorage.setItem("clickDrag", clickDrag);
-localStorage.setItem("clickTimeStamp", clickTimeStamp);*/
-
 
 //Touchscreen support
 var element;
-var cvs = document.getElementById('canvas')
+var cvs = document.getElementById('mainBoard')
 var modalHead = document.getElementById('editor-stage')
 var modalBody = document.getElementById('editor-slide')
 cvs.addEventListener('touchmove', function(e) { e.preventDefault(); }, { passive: false });
@@ -98,7 +75,6 @@ cvs.addEventListener('touchstart', function(e){
     redraw(context);
     //var coord = event.touches[0].pageX
     var coord = event.touches[0].clientX
-    $('#status_ind').html("<h1>touchstart"+coord+" "+sketch+"</h1>");
 },{ passive: false });
 cvs.addEventListener('touchmove', function(e){
     e.preventDefault();
@@ -109,16 +85,16 @@ cvs.addEventListener('touchmove', function(e){
     }
     //var coord = event.touches[0].pageX
     var coord = event.touches[0].clientX
-    $('#status_ind').html("<h1>touchmove"+coord+" "+sketch+"</h1>");
+   
 },{ passive: false });
 cvs.addEventListener('touchend', function(e){
-    $('#status_ind').html("<h1>touchend</h1>");
+   
     e.preventDefault();
     sketch=false;
     repeatIt();
 },{ passive: false });
 cvs.addEventListener('touchcancel', function(e){
-  $('#status_ind').html("<h1>touchcancel</h1>");
+
     e.preventDefault();
     sketch=false;
 },{ passive: false });
