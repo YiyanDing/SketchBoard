@@ -116,7 +116,7 @@
                       </div>
                     <div id="page-list-wrapper">
                         <ul id="page-list" class="nav nav-tabs nav-stacked" data-bind="foreach: pageList">
-                            <li data-bind="css: {active: $index() == $root.currentPage()}">
+                            <li data-bind="css: {active: $index() == $root.currentPage()}, click: $parent.clickPage">
                                
                                 <a href="#" data-bind="text: ($index()+1) + '、' + (title || 'New Page')"></a>
                             </li>
@@ -131,7 +131,7 @@
                         <div class="templateArea">
                          <ul id="img-manager-tabs" class="nav nav-tabs">
                         <li class="active" data-key="list"><a href="#my-tem-panel" data-toggle="tab">My Templates</a></li>
-                        <li data-key="local"><a href="#tem-local-panel" data-toggle="tab">Local Templates</a></li>
+                        <li data-key="local"><a href="#tem-local-panel" onclick="loadingTemplates()" data-toggle="tab">Local Templates</a></li>
     
                     </ul>
 
@@ -151,9 +151,14 @@
                           
                         </div>
                         <div class="tab-pane" id="tem-local-panel" >
-                           
+                               
                             <div id="uploadImage" >
-
+                                    <ul id="tem-list">
+                                          <br>
+                                          
+                                   
+                                             
+                                        </ul>
                             </div>
                            
                         </div>
@@ -175,25 +180,19 @@
                           
                     <div id="newBoard" >
                         
-                        <div id="canvasDiv"   class="output" draggable="true"  >
-                    <canvas id="mainBoard" width="700" height="600" draggable="true" style="border:1px solid #000000;"></canvas>
+                        <div id="canvasDiv"   class="output"  >
+                    <canvas id="mainBoard" width="700" height="600" style="border:1px solid #000000;"></canvas>
                   </div>
                 
                    
-                    <input type="file" id="fileinput"/>
+                   
                    
                     <br>
                     
                   </div>
                   
             </div>
-            <ul class="dropdown-menu" id="myEditorMenu">
-                <li><a href="#" id="myEditorMenuAdd">插入新页面</a></li>
-                <li><a href="#" id="myEditorMenuLayout">选择布局模板</a></li>
-                <li><a class="hide" data-bind="click: moveUpPage" href="#" id="myPageMoveUp">上移页面</a></li>
-                <li><a class="hide" data-bind="click: moveDownPage" href="#" id="myPageMoveDown">下移页面</a></li>
-                <li><a class="hide" data-bind="click: removePage" href="#" id="myPageRemove">删除页面</a></li>
-            </ul>
+         
         </div>
     </div>
 
@@ -446,9 +445,12 @@
     </script>
     <script src="js/tinyImgUpload.js"></script>
     <script>
-         document.getElementById('newPage').onclick= function(){
-             window.open('preview.html');
-         }
+       
+
+       var url = "http://localhost/preview.html";
+ document.getElementById('newPage').setAttribute("href",url);
+           
+         
         //document.documentElement.style.fontSize = document.documentElement.clientWidth*0.1+'px';
         
         var options = {
@@ -461,9 +463,7 @@
             }
         }
         
-        var upload = tinyImgUpload('#uploadImage', options);
        
-            upload();
            
       
        
@@ -474,6 +474,8 @@
     <script src="lib/js/bootstrap.js"></script>
     <script src="js/scripts/board3.js"></script>
     <script src="js/scripts/board4.js"></script>
+    
+    <script src="js/tinyImgUpload.js"></script>
     
     <script src="lib/js/knockout-2.2.1.js"></script>
     <script src="lib/js/highlight.min.js"></script>

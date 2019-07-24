@@ -1,3 +1,12 @@
+467 469
+ var upload = tinyImgUpload('#uploadImage', options);
+       
+            upload();
+
+188
+ <input type="file" id="fileinput"/>
+
+
 var x = touch.clientX - self.canvas.offsetLeft - windowOffset.x
       var y = touch.clientY - self.canvas.offsetTop - windowOffset.y
 

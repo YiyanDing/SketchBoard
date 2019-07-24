@@ -21,31 +21,55 @@ if (!$con) {
 
   // Convert to base64
   $image_base64 = $_POST['picture'];
-  debug_to_console($_POST);
-  echo '<script>alert("BASE64")</script>';
+  //debug_to_console($_POST);
+  //echo '<script>alert("BASE64")</script>';
 
   $image = 'data:image/'.'png'.';base64,'.$image_base64;
-  debug_to_console($image);
+
   $clickX = $_POST['clickX'];
   $clickY = $_POST['clickY'];
   $clickDrag = $_POST['clickDrag'];
   $clickTimeStamp = $_POST['clickTimeStamp'];
-
+  
+  //debug_to_console($clickTimeStamp_str);
+  $clickX_str = implode(",",$clickX);
+  $clickY_str = implode(",",$clickY);
+  $clickDrag_str = implode(",",$clickDrag);
+  $clickTime_str = implode(",",$clickTimeStamp);
+    
+  //debug_to_console($image);
   // Insert record
- // $query = "INSERT INTO images(image) VALUES('".$image."')";
-  $query = "INSERT INTO templates(clickX, clickY, clickDrag, clickTimeStamp,thumbnail) VALUES(' ".$clickX.",".$clickY.",".$clickDrag.",".$clickTimeStamp.", ".$image."')";
-  mysqli_query($con,$query);
+ //$query = "INSERT INTO templates(thumbnail) VALUES('".$image."')";
+  
+ 
+$query = "INSERT INTO templates(clickX, clickY, clickDrag, clickTimeStamp,thumbnail) VALUES('".$clickX_str."','".$clickY_str."','".$clickDrag_str."','".$clickTime_str."', '".$image."')";
+//$sql = "SELECT * from templates where id='template_id'";   
+$sql = "SELECT * from templates order by template_id desc LIMIT 1";
+mysqli_query($con,$query);
+$result = mysqli_query($con,$sql);
+  $row = mysqli_fetch_array($result);
+  //debug_to_console($row);
+  //echo $result;
+  echo $row["template_id"];
+    //echo $row["template_id"];
+    //echo "<script>console.log( 'ID Objects: " . $row["template_id"] . "' );</script>";
+
+    //echo $clickX;
+   
+    
 
   // Upload file
   //move_uploaded_file($_FILES['file']['templatePic'],$target_dir.$name); //Upload file if you have a file locally
   function debug_to_console( $data ) {
+    echo "<script>console.log( '??????' );</script>";
     $output = $data;
     if ( is_array( $output ) )
         $output = implode( ‘,’, $output);
 
-    echo "<script>console.log( 'Debug Objects: " . $output . "' );</script>";
+    echo "<script>console.log( 'Debug Objects: " . $data . "' );</script>";
+   // echo "<script>console.log( 'ID Objects: " . $row["template_id"] . "' );</script>";
+
  }
 
 ?>
-<script type="text/javascript">alert('Img upload successfully!');</script>
 

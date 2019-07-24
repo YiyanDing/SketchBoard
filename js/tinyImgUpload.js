@@ -10,9 +10,99 @@
  * 调用方法
  * tinyImgUpload('div', options)
  */
+var tmpShowList2 = document.getElementById('tem-list');
+function loadingTemplates(){
+ 
+   var temId=0;
+    var result = [];
+    $.ajax({
+        url: "templateloading.php",
+        type: "POST",
+        cache: false,
+        //contentType: false,
+        //processData: true,
+        
+       
+    })
+            .done(function(e){
+               // alert('Templates Uploading complete');
 
 
-function tinyImgUpload(ele, options) {
+               // console.log("function e");
+               // console.log("我是E",e);
+
+               // 这里差一个判断 是否已经存在了模版
+                result = e.split(" ");
+                for(var i=0;i<result.length;i++){
+                    result[i] = result[i].split(",");
+                   // console.log("i",i,result[i]);
+                  if(i!=0 && i%6 == 0){
+                    strDateUrl = result[i-1];  
+                    temId = result[i-6][0];
+                    //console.log("picsrc ???",result[i-1]); 
+                   // console.log("id ???",result[i-6][0]); 
+                    var myTemDiv = document.createElement('div');
+                    myTemDiv.className = 'tempDiv2'; 
+                  // 向图片容器里添加元素
+                     myTemDiv.setAttribute("draggable",true);
+                     
+                     myTemDiv.setAttribute("style","height: 150px; width: 200px;border: 2px solid #666666; border-radius: 10px; box-shadow: inset 0 0 3px #000; margin-bottom: 20px; margin-left: 80px");
+                     myTemDiv.innerHTML = '<img class="oImgBox2" draggable="true" id="'+temId+'" src="'+strDateUrl+'" />'
+                     insertAfter2(myTemDiv, tmpShowList2);
+
+                   
+                  }
+             }
+
+             myTemDiv.addEventListener('dragstart', handleDragStart, false);
+             var cols = document.querySelectorAll('.oImgBox2');
+             //console.log(cols);
+             [].forEach.call(cols, function (col) {
+             col.addEventListener('dragstart', handleDragStart, false);
+               col.addEventListener('dragover', handleDragOver, false);
+
+});
+           function handleDragStart(e) {
+        //  console.log("我开始啦",e.target.id);
+            e.dataTransfer.setData('dragElement', e.target.id);
+} 
+        function handleDragOver(e) {
+
+       }
+     
+            });
+
+            document.getElementById('descriptionText').style.display="none";
+
+
+        
+  
+  
+ 
+  
+  
+  
+  
+ 
+    
+   
+
+
+
+}
+
+function insertAfter2(newEle, targetEle){
+    var parentEle = targetEle.parentNode;
+    if(parentEle.lastChild == targetEle){
+        parentEle.appendChild(newEle);
+    }
+    else{
+        parentEle.insertBefore(newEle, targetEle.nextSibling);
+    }
+  }
+
+
+/*function tinyImgUpload(ele, options) {
     // 判断容器元素合理性并且添加基础元素
 
     //document.documentElement.style.fontSize = document.documentElement.clientWidth*0.1+'px';
@@ -140,6 +230,5 @@ function tinyImgUpload(ele, options) {
         xhr.send(formData);
 
     }
-    return uploadImg;
-}
+   */
 

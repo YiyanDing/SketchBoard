@@ -17,6 +17,7 @@ app.controller('appCtrl', function ($scope) {
 
     // hook up event handlers
   var cols = document.querySelectorAll('.oImgBox');
+  console.log(cols);
     [].forEach.call(cols, function (col) {
         col.addEventListener('dragstart', handleDragStart, false);
         col.addEventListener('dragenter', handleDragEnter, false)
@@ -37,12 +38,13 @@ app.controller('appCtrl', function ($scope) {
 
   var SketchCanvas = document.getElementById('mainBoard');
    SketchCanvas.addEventListener('drop', handleDrop, false);
-SketchCanvas.addEventListener('dragend', handleDragEnd, false);
+SketchCanvas.addEventListener('dragend', handleDropOver, false);
 
     var dragSrcEl = null;
 
   
     function handleDragStart(e) {
+        console.log("jinlaile",e.target);
         if (e.target.className.indexOf('oImgBox') > -1) {
             dragSrcEl = e.target;
             dragSrcEl.style.opacity = '0.4';
@@ -54,6 +56,7 @@ SketchCanvas.addEventListener('dragend', handleDragEnd, false);
         
         }
     }
+    
     function handleDragOver(e) {
         if (dragSrcEl) {
             e.preventDefault();
@@ -62,6 +65,7 @@ SketchCanvas.addEventListener('dragend', handleDragEnd, false);
         }
     }
     function handleDragEnter(e) {
+        console.log("jinlaile",e.target);
         if (dragSrcEl) {
             e.target.classList.add('over');
         }
@@ -83,8 +87,14 @@ SketchCanvas.addEventListener('dragend', handleDragEnd, false);
             col.style.opacity = '';
             col.classList.remove('over');
         });
-    }
 
+
+        
+    }
+    function handleDropOver(e)
+    {console.log("free location here");
+        e.preventDefault();
+    }
 
     
     function handleDrop(e) {
@@ -92,39 +102,47 @@ SketchCanvas.addEventListener('dragend', handleDragEnd, false);
             e.stopPropagation();
             e.stopImmediatePropagation();
             e.preventDefault();
-            console.log("drop here")
-            var data=e.dataTransfer.getData('text');
+           // console.log("drop here",e.dataTransfer.getData("dragElement2"))
+            var templateid = parseInt(e.dataTransfer.getData("dragElement"));
+          // var templateid2 =parseInt(e.dataTransfer.getData("dragElement2"));
+            var result = [];
+            $.ajax({
+                url: "sketch_retrieval.php",
+                type: "POST",
+                cache: false,
+                //contentType: false,
+                //processData: true,
+                data: {"templateid":templateid},
+               
+            })
+            .done(function(e){
+               // alert('Drop complete');
+                // console.log("function e");
+                //console.log(e);
+                result = e.split(" ");
+                for(var i=0;i<result.length;i++){
+                    result[i] = result[i].split(",");
+                   // console.log("i",i,result[i]);
+                }
+                
+                //console.log(result);
+                clickX = result[0];
+                clickY = result[1];
+                clickDrag = result[2];
+                clickTimeStamp = result[3];
+                repeatIt3( clickX ,clickY,clickDrag, clickTimeStamp);
+                //saveTemplateStroke(clickX, clickY, clickDrag, clickTimeStamp);
+                
 
-            var tempShow = document.getElementById('canvasDiv');
-//insertAfter(document.getElementById(data), tempShow);
-            e.target.appendChild(document.getElementById(data));
+            });
+           
+            
 
 
-            //readSingleFile();
-            var contents = e.target.result;
-            var datastructure = JSON.parse(contents);
-            clickX = datastructure["clickX"];
-            clickY = datastructure["clickY"];
-            clickDrag = datastructure["clickDrag"];
-            clickTimeStamp = datastructure["clickTimeStamp"];
-            repeatIt();
 
-            /*if (dragSrcEl != this) {
-                dragSrcEl.innerHTML = e.target.innerHTML;
-                this.innerHTML = e.dataTransfer.getData('text');
-                console.log("Drop Here");
-            }*/
-       // }
+           
     }
-    function insertAfter(newEle, targetEle){
-        var parentEle = targetEle.parentNode;
-        if(parentEle.lastChild == targetEle){
-            parentEle.appendChild(newEle);
-        }
-        else{
-            parentEle.insertBefore(newEle, targetEle.nextSibling);
-        }
-      }
+  
       
 
  

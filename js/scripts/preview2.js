@@ -1,6 +1,4 @@
 
-//document.getElementById('fileinput').addEventListener('change', readSingleFile, false);
-//Reference: http://www.williammalone.com/articles/create-html5-canvas-javascript-drawing-app/
 context = document.getElementById('mainBoard').getContext("2d");
 //var canvasDiv = document.getElementById('canvasDiv');
 var mainBoard = document.getElementById('mainBoard');
@@ -12,15 +10,6 @@ var colorBrown = "#986928";
 var curColor = colorBlack;
 var clickColor = new Array();
 
-
-//canvas2 = document.getElementById('canvas2').getContext("2d");
-//var canvasDiv2 = document.getElementById('canvasDiv2');
-/*window.setInterval(record, 1000); 
-function record(){
-  var q = document.getElementById("mainBoard");
-  console.log(q,"errorrrrrr");
-  //document.getElementById("newBoard2").innerHTML = q;
-}*/
 
 $('#mainBoard').mousedown(function(e){
   //Mouse clicked
@@ -241,58 +230,14 @@ function repeater2(){
   }
   i+=1
 }
-function SaveAsFile(text,filename) {
-  //REF https://github.com/eligrey/FileSaver.js/wiki/FileSaver.js-Example
-        try {
-            var obj = new Blob([text],{type:"text/plain;charset=utf-8"});
-            saveAs(obj, filename);
-        } catch (e) {
-            console.log("ERROR");
-            console.log(e);
-            window.open("data:"+"text/plain;charset=utf-8"+"," + encodeURIComponent(text), '_blank','');
-        }
-    }
-function readSingleFile(evt) {
-    //Retrieve the first (and only!) File from the FileList object
-    //REF https://www.htmlgoodies.com/beyond/javascript/read-text-files-using-the-javascript-filereader.html
-    var f = evt.target.files[0];
-
-    if (f) {
-      var r = new FileReader();
-      r.onload = function(e) {
-
-        //Retrieves the file contents
-        var contents = e.target.result;
-        var datastructure = JSON.parse(contents);
-
-        //Recover data
-        clickX = datastructure["clickX"];
-        clickY = datastructure["clickY"];
-        clickDrag = datastructure["clickDrag"];
-        clickTimeStamp = datastructure["clickTimeStamp"];
-
-        //Redraw
-        repeatIt();
-
-      }
-      r.readAsText(f);
-    } else {
-      alert("Failed to load file");
-    }
-  }
 
 
-
-function retrieveIt(){
-  readSingleFile(null);
-  //repeatIt();
-}
 
 function repeatIt(){
   //Draw the repeat of the drawing
   clickX_original = clickX;
   clickY_original = clickY;
-  loop_id = setInterval(repeater,1);
+  loop_id2 = setInterval(repeater,1);
   //Use setInterval method because JS will not refresh the canvas unless resource was released during the execution.
 
 }
@@ -362,7 +307,7 @@ function repeater3(){
     clickY3 = clickY_original3;
   }
   p+=1;
-  //console.log(p);
+  console.log(p);
   
 }
 function saveTemplateStroke(clickX3, clickY3, clickDrag3, clickTimeStamp3){
@@ -454,8 +399,6 @@ function editStroke(q){
    Array.prototype.push.apply(clickTimeStamps,clickTimeStamp);*/
  
  //console.log(clickXs)
-
-
    if(clickXs[q]){
      clickXs[q] = clickXs[q].concat(clickX);
      clickYs[q] = clickYs[q].concat(clickY);
@@ -470,22 +413,9 @@ function editStroke(q){
      clickTimeStamps.push(clickTimeStamp);
   
    }
+   
 
-
- var url = "http://localhost/preview.html";
- //document.getElementById('newPage').setAttribute("href",url);
-  //var url_string = "http://www.example.com/t.html?a=1&b=3&c=m2-m3-m4-m5"; //window.location.href
-  console.log("old url",url);
-  //var url = new URL(url_string);
-  let params = new URLSearchParams(location.search.slice(1));
-  //url = url + "?q=" +document.myform.elements[0].value; 
-  url = url + "?x=" +clickX +"&y=" +clickY + "&d=" +clickDrag +"&t=" +clickTimeStamp; 
-console.log("new url",url);
-document.getElementById('newPage').setAttribute("href",url);
- //var x= url.searchParams.get("x");
- //var x= params.get("x");
- // console.log("almost finished!!!",x);
-  
+ 
  
  }
 
@@ -495,8 +425,6 @@ saveStroke(index);
 drawTem(context,index);
 
   redraw2(context, index);
- 
-
 
  
   
@@ -525,6 +453,4 @@ function clearMainBoard()
 
   //context2.closePath();
  }
-
- 
 

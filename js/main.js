@@ -629,9 +629,12 @@ define('page',['data','design'], function (dataManager,designManager) {
     }
     return {
         init: function (vm) {
+            
             vm.addPageListMenu = function(vm){
                 AddPageListMenu(vm);
             };
+
+            
             vm.clickPage = function (pageData, e) {
                 var beforeIndex = vm.currentPage();
 
@@ -642,10 +645,15 @@ define('page',['data','design'], function (dataManager,designManager) {
                 page = vm.pageList.splice(beforeIndex, 1)[0];
                 vm.pageList.splice(beforeIndex, 0, page);
              
-               // clearMainBoard();
-               clearMainBoard(); 
-               strokeReplay();
+                const context = document.getElementById('mainBoard').getContext("2d");
+                context.clearRect(0, 0, mainBoard.width, mainBoard.height);
+//context.restore();
+context.beginPath();
+             editStroke($index);//原先是-1
+               redraw2(context,$index);
+               //repeatIt2($index);
                
+               clearMainBoard();
            
 
 
@@ -658,11 +666,7 @@ define('page',['data','design'], function (dataManager,designManager) {
                     //暂时：保存前一个页面信息不失真
                     page = vm.pageList.splice($index, 1)[0];
                     vm.pageList.splice($index, 0, page);
-                 
-              var context = document.getElementById('mainBoard').getContext("2d");
-              context.save();
-              redraw(context);
-                 repeatIt();
+        
                     AddPageListMenu(vm);
                 }
             };
@@ -674,15 +678,18 @@ define('page',['data','design'], function (dataManager,designManager) {
                     page = vm.pageList.splice($index, 1)[0];
                     vm.pageList.splice($index, 0, page);
                           
-              var context = document.getElementById('mainBoard').getContext("2d");
-              context.restore();
-              redraw(context);
-                 repeatIt();
+            
                     AddPageListMenu(vm);
                 }
             };
             vm.addPage = function () {
+
+                const context = document.getElementById('mainBoard').getContext("2d");
+                context.clearRect(0, 0, mainBoard.width, mainBoard.height);
+                //context.restore();
+                context.beginPath();
                 var $index;
+               
                 var slideList;
                 var slide;
                 var page;
@@ -694,7 +701,7 @@ define('page',['data','design'], function (dataManager,designManager) {
 
                 vm.pageList.splice($index + 1, 0, {sid: sid, title: '', key: ''});
 
-
+                
                 slideList = dataManager.getSlideList();
                 slide = {
                         sid: sid,
@@ -709,7 +716,7 @@ define('page',['data','design'], function (dataManager,designManager) {
                         //    content: {type: 'text', value: ''}
                         //}
                     };
-                    //const context = document.getElementById('mainBoard').getContext("2d");
+                   
                   // context.setTransform(1,0,0,1,0,0);
                   // context.beginPath();
                     console.log("called");
@@ -724,11 +731,14 @@ define('page',['data','design'], function (dataManager,designManager) {
                 //暂时：保存前一个页面信息不失真
                 page = vm.pageList.splice($index, 1)[0];
                 vm.pageList.splice($index, 0, page);
-         
-                saveStroke();
+        
+             
+
+               // console.log("index",$index);
+                if($index==0) saveStroke(0);
                 clearMainBoard();
-                
-                //strokeReplay();
+                strokeReplay($index+1);
+             
              
                 dataManager.save();
                 AddPageListMenu(vm);
@@ -819,9 +829,14 @@ define('page',['data','design'], function (dataManager,designManager) {
 
                     vm.currentPage($index - 1);
                     
-                    clearMainBoard();
-                    strokeReplay();
-                    drawHistory();
+                    const context = document.getElementById('mainBoard').getContext("2d");
+                context.clearRect(0, 0, mainBoard.width, mainBoard.height);
+//context.restore();
+context.beginPath();
+             editStroke($index);
+               redraw2(context,$index-1);
+               
+               clearMainBoard();
                    
               
                 
@@ -837,6 +852,7 @@ define('page',['data','design'], function (dataManager,designManager) {
 
                 $index = vm.currentPage();
                 slideList = dataManager.getSlideList();
+                
 
                 if ($index < vm.pageList().length - 1) {
                     page = vm.pageList.splice($index, 1)[0];
@@ -845,12 +861,18 @@ define('page',['data','design'], function (dataManager,designManager) {
                     slide = slideList.splice($index, 1)[0];
                     slideList.splice($index + 1, 0, slide);
 
+                    
                     vm.currentPage($index + 1);
-                    //clearMainBoard();
-                    strokeReplay();
 
-                    //var context = document.getElementById('mainBoard').getContext("2d");
-                    //redraw(context);
+                    const context = document.getElementById('mainBoard').getContext("2d");
+                    context.clearRect(0, 0, mainBoard.width, mainBoard.height);
+    //context.restore();
+    context.beginPath();
+                 editStroke($index);
+                   redraw2(context,$index+1);
+                   
+                   clearMainBoard();
+
                     dataManager.save();
                     AddPageListMenu(vm);
                 }

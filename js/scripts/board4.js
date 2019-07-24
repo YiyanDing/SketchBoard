@@ -16,7 +16,7 @@ var curSize = 10;
 var blackPen = document.getElementById('blackpen');
 var redPen = document.getElementById('redpen');
 var yellowPen = document.getElementById('yellowpen');
-var curColor = colorPurple;
+var curColor = colorBlack;
 var clickColor = new Array();
 var clickSize = new Array();
 
@@ -103,12 +103,7 @@ context2.beginPath();
      //repeatIt();
  
  
-     var temDiv = document.createElement('div');
-     temDiv.className = 'tempDiv';
-     // 向图片容器里添加元素
-     temDiv.setAttribute("style","height: 10px; width: 20px;border: 2px solid #666666; border-radius: 10px; box-shadow: inset 0 0 3px #000;");
-     temDiv.innerHTML = '<img class="oImgBox" draggable="true" src="'+strDateUrl+'" />'+
-                     '<a href="#" name="temRemove" class="tem-remove" >x</a>'
+     
     
 
 
@@ -153,8 +148,8 @@ context2.beginPath();
      var name = "Random name";
      var formData = {"clickX":clickX2,"clickY":clickY2,"clickDrag":clickDrag2,"clickTimeStamp":clickTimeStamp2,"picture":base64ImageContent, "name":name};
      console.log("php works here");
-     console.log(formData);
-     
+    //console.log(formData);
+    var temDiv = document.createElement('div');
      $.ajax({
       url: "draw_app.php",
       type: "POST",
@@ -166,41 +161,54 @@ context2.beginPath();
     })
           .done(function(e){
               alert('Upload complete');
-              console.log(e);
+             // console.log("function e");
+             // console.log(e);
+              
+     temDiv.className = 'tempDiv';  
+     // 向图片容器里添加元素
+     temDiv.setAttribute("draggable",true);
+     temDiv.setAttribute("templateid",parseInt(e))
+     temDiv.setAttribute("style","height: 150px; width: 200px;border: 2px solid #666666; border-radius: 10px; box-shadow: inset 0 0 3px #000; margin-bottom: 20px; margin-left: 80px");
+     temDiv.innerHTML = '<img class="oImgBox" draggable="true" id="'+e+'" src="'+strDateUrl+'" />'+
+                     '<a href="#" name="temRemove" class="tem-remove" >x</a>'
+
           });
+      
 
-
-
-
-/*var oImgBox = document.createElement("img");
-oImgBox.setAttribute("class", "imgBox");
-
-oImgBox.setAttribute("src",strDateUrl);
-oImgBox.setAttribute("draggable",true);
-oImgBox.setAttribute("style","border: 2px solid #666666; border-radius: 10px; box-shadow: inset 0 0 3px #000;");
-
-
-
-
-oImgBox.setAttribute("width","200px");
-oImgBox.setAttribute("height","200px");
-oImgBox.setAttribute("position","absolute");
-oImgBox.setAttribute("margin-left","20px");
-// oImgBox.setAttribute("right","50%");
-oImgBox.innerHTML =  '<a href="#" class="tem-remove" id="temremove"   >x</a>'*/
 
 var tmpShowList = document.getElementById('my-tem-list');
 insertAfter(temDiv, tmpShowList);
 
 
-document.getElementById('descriptionText').style.display="none";
 
+
+temDiv.addEventListener('dragstart', handleDragStart, false);
+var cols = document.querySelectorAll('.oImgBox');
+  console.log(cols);
+    [].forEach.call(cols, function (col) {
+        col.addEventListener('dragstart', handleDragStart, false);
+        col.addEventListener('dragover', handleDragOver, false);
+       // col.addEventListener('drop', handleDrop, false);
+       // col.addEventListener('dragend', handleDragEnd, false);
+    });
+    function handleDragStart(e) {
+      console.log("jinlaile",e.target.id);
+      e.dataTransfer.setData('dragElement', e.target.id);
+  }
+  
+  function handleDragOver(e) {
+     
+  }
+
+document.getElementById('descriptionText').style.display="none";
 
 var temremove = document.getElementsByClassName("tem-remove")[0];
 temremove.addEventListener('click', function(e){
   temDiv.remove();
- temremove.style.display="none";
+ temDiv.style.display="none";
+ //temremove.style.display="none";
 },false);
+
 
 
 
