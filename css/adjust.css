@@ -218,7 +218,7 @@
 	transition: all 0.2s ease-in-out;
 }
 #page-list a{
-	width: 47.72727%;
+	width: 100%;
 	max-width: 140px;
 	display: block;
 	float: left;
