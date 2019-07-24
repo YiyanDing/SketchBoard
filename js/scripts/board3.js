@@ -11,6 +11,8 @@ var colorYellow = "#ffcf33";
 var colorBrown = "#986928";
 var curColor = colorBlack;
 var clickColor = new Array();
+var modalHead = document.getElementById('editor-stage');
+var modalBody = document.getElementById('editor-slide');
 
 
 $('#mainBoard').mousedown(function(e){
@@ -64,13 +66,12 @@ var clickTimeStamps = new Array();
 //Touchscreen support
 var element;
 var cvs = document.getElementById('mainBoard')
-var modalHead = document.getElementById('editor-stage')
-var modalBody = document.getElementById('editor-slide')
+
 cvs.addEventListener('touchmove', function(e) { e.preventDefault(); }, { passive: false });
 cvs.addEventListener('touchstart', function(e){
     e.preventDefault();
     sketch = true;
-    var touch = event.touches[0];
+    var touch = e.touches[0];
     addClick(touch.clientX - this.offsetLeft - modalHead.getBoundingClientRect().left - modalHead.getBoundingClientRect().left , touch.clientY - this.offsetTop -  modalBody.getBoundingClientRect().top-  modalBody.getBoundingClientRect().top);
    // addClick(event.touches[0].pageX - this.offsetLeft - modalHead.getBoundingClientRect().left, event.touches[0].pageY - this.offsetTop - modalBody.getBoundingClientRect().top);
     redraw(context);
@@ -82,7 +83,7 @@ cvs.addEventListener('touchmove', function(e){
     if(sketch){
      // addClick(event.touches[0].pageX - this.offsetLeft, event.touches[0].pageY - this.offsetTop, true);
      //addClick(event.touches[0].clientX - this.offsetLeft, event.touches[0].clientY - this.offsetTop); 
-     var touch = event.touches[0];
+     var touch = e.touches[0];
     addClick(touch.clientX - this.offsetLeft - modalHead.getBoundingClientRect().left - modalHead.getBoundingClientRect().left , touch.clientY - this.offsetTop  - modalBody.getBoundingClientRect().top-  modalBody.getBoundingClientRect().top);
      redraw(context);
     }
@@ -94,7 +95,7 @@ cvs.addEventListener('touchend', function(e){
    
     e.preventDefault();
     sketch=false;
-    repeatIt();
+    //repeatIt();
 },{ passive: false });
 cvs.addEventListener('touchcancel', function(e){
 
