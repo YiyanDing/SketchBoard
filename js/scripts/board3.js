@@ -2,7 +2,7 @@
 //document.getElementById('fileinput').addEventListener('change', readSingleFile, false);
 //Reference: http://www.williammalone.com/articles/create-html5-canvas-javascript-drawing-app/
 context = document.getElementById('mainBoard').getContext("2d");
-//var canvasDiv = document.getElementById('canvasDiv');
+
 var mainBoard = document.getElementById('mainBoard');
 var colorPurple = "#cb3594";
 var colorBlack = "#000000";
@@ -11,7 +11,7 @@ var colorYellow = "#ffcf33";
 var colorBrown = "#986928";
 var curColor = colorBlack;
 var clickColor = new Array();
-var modalHead = document.getElementById('editor-stage');
+var modalHead = document.getElementById('mainBoard');
 var modalBody = document.getElementById('editor-slide');
 
 
@@ -72,7 +72,7 @@ cvs.addEventListener('touchstart', function(e){
     e.preventDefault();
     sketch = true;
     var touch = e.touches[0];
-   addClick(touch.clientX - this.offsetLeft, touch.clientY - this.offsetTop);
+   addClick(touch.clientX - this.offsetLeft - modalHead.getBoundingClientRect().left, touch.clientY - this.offsetTop -  modalBody.getBoundingClientRect().top);
    // addClick(event.touches[0].pageX - this.offsetLeft - modalHead.getBoundingClientRect().left, event.touches[0].pageY - this.offsetTop - modalBody.getBoundingClientRect().top);
     redraw(context);
     
@@ -83,7 +83,7 @@ cvs.addEventListener('touchmove', function(e){
      // addClick(event.touches[0].pageX - this.offsetLeft, event.touches[0].pageY - this.offsetTop, true);
      //addClick(event.touches[0].clientX - this.offsetLeft, event.touches[0].clientY - this.offsetTop); 
      var touch = e.touches[0];
-    addClick(touch.clientX- this.offsetLeft, touch.clientY  - this.offsetTop);
+    addClick(touch.clientX- this.offsetLeft - modalHead.getBoundingClientRect().left, touch.clientY  - this.offsetTop - modalBody.getBoundingClientRect().top);
      redraw(context);
     }
 
