@@ -102,7 +102,7 @@ SketchCanvas.addEventListener('dragend', handleDropOver, false);
             e.stopPropagation();
             e.stopImmediatePropagation();
             e.preventDefault();
-           // console.log("drop here",e.dataTransfer.getData("dragElement2"))
+           console.log("drop here",e.dataTransfer.getData("dragElement2"))
             var templateid = parseInt(e.dataTransfer.getData("dragElement"));
           // var templateid2 =parseInt(e.dataTransfer.getData("dragElement2"));
             var result = [];

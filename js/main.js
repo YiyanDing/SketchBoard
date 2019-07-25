@@ -243,7 +243,7 @@ define('data',['storage'], function (storage) {
         transition: 'horizontal',
         title: '',
         slides: [
-            {sid: 'A', layout: 'title', items: {title: {type: 'text', value: 'Homepage'}, content: {type: 'img', value: document.getElementById('canvasDiv')}}},
+           
             {sid: 'B', layout: 'normal', items: {title: {type: 'text', value: 'Body'}, content: {type: 'text', value: '正文内容.'}}},
             //{sid: 'C', layout: 'imax', items: {title: {type: 'text', value: 'EndPage'}, content: {type: 'img', value: ''}}}
             // {sid: 'D', template: 'video', layout: 'imax', items: {title: {type: 'text', value: 'Video'}, content: {type: 'video', value: 'XNjUwODE1Mg=='}}}
