@@ -192,6 +192,7 @@ var cols = document.querySelectorAll('.oImgBox');
        // col.addEventListener('dragend', handleDragEnd, false);
     });
     function handleDragStart(e) {
+      e.preventDefault();
       console.log("jinlaile",e.target.id);
       e.dataTransfer.setData('dragElement', e.target.id);
   }
