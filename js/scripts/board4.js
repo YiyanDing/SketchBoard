@@ -188,6 +188,8 @@ var cols = document.querySelectorAll('.oImgBox');
     [].forEach.call(cols, function (col) {
         col.addEventListener('dragstart', handleDragStart, false);
         col.addEventListener('dragover', handleDragOver, false);
+        col.addEventListener('dragenter', handleDragEnter, false)
+        col.addEventListener('dragleave', handleDragLeave, false);
        // col.addEventListener('drop', handleDrop, false);
        // col.addEventListener('dragend', handleDragEnd, false);
     });
@@ -198,9 +200,26 @@ var cols = document.querySelectorAll('.oImgBox');
   }
   
   function handleDragOver(e) {
-     
-  }
+    if (e.target) {
+        e.preventDefault();
+        e.dataTransfer.dropEffect = 'copy';
 
+    }
+}
+function handleDragEnter(e) {
+    console.log("jinlaile",e.target);
+    if (e.target) {
+        e.target.classList.add('over');
+    }
+}
+function handleDragLeave(e) {
+    e.stopPropagation();
+    e.stopImmediatePropagation();
+    e.preventDefault();
+    if (e.target) {
+        e.target.classList.remove('over');
+    }
+}
 document.getElementById('descriptionText').style.display="none";
 
 var temremove = document.getElementsByClassName("tem-remove")[0];

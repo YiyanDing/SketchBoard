@@ -59,16 +59,37 @@ function loadingTemplates(){
              //console.log(cols);
              [].forEach.call(cols, function (col) {
              col.addEventListener('dragstart', handleDragStart, false);
-               col.addEventListener('dragover', handleDragOver, false);
+             col.addEventListener('dragover', handleDragOver, false);
+             col.addEventListener('dragenter', handleDragEnter, false)
+             col.addEventListener('dragleave', handleDragLeave, false);
 
 });
            function handleDragStart(e) {
-        //  console.log("我开始啦",e.target.id);
+         console.log("我开始啦",e.target.id);
             e.dataTransfer.setData('dragElement', e.target.id);
 } 
-        function handleDragOver(e) {
+function handleDragOver(e) {
+    if (e.target) {
+        e.preventDefault();
+        e.dataTransfer.dropEffect = 'copy';
 
-       }
+    }
+}
+function handleDragEnter(e) {
+    console.log("drag enter",e.target);
+    if (e.target) {
+        e.target.classList.add('over');
+    }
+}
+function handleDragLeave(e) {
+    e.stopPropagation();
+    e.stopImmediatePropagation();
+    e.preventDefault();
+    if (e.target) {
+        console.log("drag leave",e.target);
+        e.target.classList.remove('over');
+    }
+}
      
             });
 
