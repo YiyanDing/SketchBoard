@@ -102,7 +102,7 @@ SketchCanvas.addEventListener('dragend', handleDropOver, false);
             e.stopPropagation();
             e.stopImmediatePropagation();
             e.preventDefault();
-           console.log("drop here",e.dataTransfer.getData("dragElement2"))
+           console.log("drop here",e.dataTransfer.getData("dragElement"))
             var templateid = parseInt(e.dataTransfer.getData("dragElement"));
           // var templateid2 =parseInt(e.dataTransfer.getData("dragElement2"));
             var result = [];
@@ -126,10 +126,14 @@ SketchCanvas.addEventListener('dragend', handleDropOver, false);
                 }
                 
                 //console.log(result);
-                clickX = result[0];
+                /*clickX = result[0];
                 clickY = result[1];
                 clickDrag = result[2];
-                clickTimeStamp = result[3];
+                clickTimeStamp = result[3];*/
+                clickX = clickX.concat(result[0]);
+                clickY = clickY.concat(result[1]);
+                clickDrag = clickDrag.concat(result[2]);
+                clickTimeStamp = clickTimeStamp.concat(result[3]);
                 repeatIt3( clickX ,clickY,clickDrag, clickTimeStamp);
                 //saveTemplateStroke(clickX, clickY, clickDrag, clickTimeStamp);
                 

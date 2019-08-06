@@ -170,8 +170,16 @@ context2.beginPath();
      temDiv.setAttribute("templateid",parseInt(e))
      temDiv.setAttribute("style","height: 150px; width: 200px;border: 2px solid #666666; border-radius: 10px; box-shadow: inset 0 0 3px #000; margin-bottom: 20px; margin-left: 80px");
      temDiv.innerHTML = '<img class="oImgBox" draggable="true" id="'+e+'" src="'+strDateUrl+'" />'+
-                     '<a href="#" name="temRemove" class="tem-remove" >x</a>'
+                     '<a href="#"  name"Removing" class="tem-remove" >x</a>'
 
+
+
+                     var temremove = document.getElementsByClassName("tem-remove")[0];
+                     temremove.addEventListener('click', function(e){
+                       temDiv.remove();
+                      temDiv.style.display="none";
+                      //temremove.style.display="none";
+                     },false);                
           });
       
 
@@ -222,12 +230,7 @@ function handleDragLeave(e) {
 }
 document.getElementById('descriptionText').style.display="none";
 
-var temremove = document.getElementsByClassName("tem-remove")[0];
-temremove.addEventListener('click', function(e){
-  temDiv.remove();
- temDiv.style.display="none";
- //temremove.style.display="none";
-},false);
+
 
 
 
@@ -301,7 +304,7 @@ $('#tempBoard').mouseleave(function(e){
 //Touchscreen support
 var element;
 var cvs2 = document.getElementById('tempBoard')
-cvs2.addEventListener('touchmove', function(e) { e.preventDefault(); }, { passive: false });
+//cvs2.addEventListener('touchmove', function(e) { e.preventDefault(); }, { passive: false });
 cvs2.addEventListener('touchstart', function(e){
     e.preventDefault();
     sketch = true;
@@ -314,7 +317,7 @@ cvs2.addEventListener('touchstart', function(e){
 cvs2.addEventListener('touchmove', function(e){
     e.preventDefault();
     if(sketch){
-      addClick1(event.touches[0].clientX - this.offsetLeft - modalHead.getBoundingClientRect().left, event.touches[0].clientY - this.offsetTop - modalBody.getBoundingClientRect().top);
+      addClick1(event.touches[0].clientX - this.offsetLeft - modalHead.getBoundingClientRect().left, event.touches[0].clientY - this.offsetTop - modalBody.getBoundingClientRect().top,true);
      // addClick1(event.touches[0].pageX - this.offsetLeft, event.touches[0].pageY - this.offsetTop, true);
       draw(context2);
     }

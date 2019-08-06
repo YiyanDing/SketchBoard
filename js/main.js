@@ -649,6 +649,7 @@ define('page',['data','design'], function (dataManager,designManager) {
                 context.clearRect(0, 0, mainBoard.width, mainBoard.height);
 //context.restore();
 context.beginPath();
+
              editStroke($index);//原先是-1
                redraw2(context,$index);
                //repeatIt2($index);
@@ -738,7 +739,6 @@ context.beginPath();
                 if($index==0) saveStroke(0);
                 clearMainBoard();
                 strokeReplay($index+1);
-             
              
                 dataManager.save();
                 AddPageListMenu(vm);

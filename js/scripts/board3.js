@@ -43,6 +43,21 @@ $('#mainBoard').mouseup(function(e){
 $('#mainBoard').mouseleave(function(e){
 
   sketch = false;
+  var url = "http://localhost/preview.html";
+  //document.getElementById('newPage').setAttribute("href",url);
+   //var url_string = "http://www.example.com/t.html?a=1&b=3&c=m2-m3-m4-m5"; //window.location.href
+   console.log("old url",url);
+   //var url = new URL(url_string);
+   let params = new URLSearchParams(location.search.slice(1));
+   //url = url + "?q=" +document.myform.elements[0].value; 
+   url = url + "?x=" +clickX +"&y=" +clickY + "&d=" +clickDrag +"&t=" +clickTimeStamp; 
+  console.log("new url",url);
+  document.getElementById('newPage').setAttribute("href",url);
+  //var x= url.searchParams.get("x");
+  //var x= params.get("x");
+  // console.log("almost finished!!!",x);
+
+  //editStroke(q)
 });
 var clickX = new Array();
 var clickY = new Array();
@@ -67,7 +82,7 @@ var clickTimeStamps = new Array();
 var element;
 var cvs = document.getElementById('mainBoard')
 
-cvs.addEventListener('touchmove', function(e) { e.preventDefault(); }, { passive: false });
+
 cvs.addEventListener('touchstart', function(e){
     e.preventDefault();
     sketch = true;
@@ -83,7 +98,7 @@ cvs.addEventListener('touchmove', function(e){
      // addClick(event.touches[0].pageX - this.offsetLeft, event.touches[0].pageY - this.offsetTop, true);
      //addClick(event.touches[0].clientX - this.offsetLeft, event.touches[0].clientY - this.offsetTop); 
      var touch = e.touches[0];
-    addClick(touch.clientX- this.offsetLeft - modalHead.getBoundingClientRect().left, touch.clientY  - this.offsetTop - modalBody.getBoundingClientRect().top);
+    addClick(touch.clientX- this.offsetLeft - modalHead.getBoundingClientRect().left, touch.clientY  - this.offsetTop - modalBody.getBoundingClientRect().top,true);
      redraw(context);
     }
 
@@ -136,6 +151,7 @@ function redraw(object){
   }
  
 }
+
 function redraw2(object, m){
   //Draws the drawing on the canvas "object"
   //object.clearRect(0, 0, context.canvas.width, context.canvas.height); // Clears the canvas
@@ -410,6 +426,8 @@ console.log(clickXs)
     clickYs.push(clickY);
     clickDrags.push(clickDrag);
     clickTimeStamps.push(clickTimeStamp);
+    
+     
   }
   
 // call index of each array
@@ -421,9 +439,10 @@ console.log(clickXs)
   clickDrags.concat(clickDrag);
   clickTimeStamps.concat(clickTimeStamp);*/
  
-
-
 }
+
+
+
 function editStroke(q){
 
   /* Array.prototype.push.apply(clickXs,clickX);
@@ -446,23 +465,23 @@ function editStroke(q){
      clickYs.push(clickY);
      clickDrags.push(clickDrag);
      clickTimeStamps.push(clickTimeStamp);
-  
+    
    }
+   var url = "http://localhost/preview.html";
+   //document.getElementById('newPage').setAttribute("href",url);
+    //var url_string = "http://www.example.com/t.html?a=1&b=3&c=m2-m3-m4-m5"; //window.location.href
+    console.log("old url",url);
+    //var url = new URL(url_string);
+    let params = new URLSearchParams(location.search.slice(1));
+    //url = url + "?q=" +document.myform.elements[0].value; 
+    url = url + "?x=" +clickX +"&y=" +clickY + "&d=" +clickDrag +"&t=" +clickTimeStamp; 
+   console.log("new url",url);
+   document.getElementById('newPage').setAttribute("href",url);
+   //var x= url.searchParams.get("x");
+   //var x= params.get("x");
+   // console.log("almost finished!!!",x);
 
 
- var url = "http://localhost/preview.html";
- //document.getElementById('newPage').setAttribute("href",url);
-  //var url_string = "http://www.example.com/t.html?a=1&b=3&c=m2-m3-m4-m5"; //window.location.href
-  console.log("old url",url);
-  //var url = new URL(url_string);
-  let params = new URLSearchParams(location.search.slice(1));
-  //url = url + "?q=" +document.myform.elements[0].value; 
-  url = url + "?x=" +clickX +"&y=" +clickY + "&d=" +clickDrag +"&t=" +clickTimeStamp; 
-console.log("new url",url);
-document.getElementById('newPage').setAttribute("href",url);
- //var x= url.searchParams.get("x");
- //var x= params.get("x");
- // console.log("almost finished!!!",x);
   
  
  }
@@ -481,6 +500,8 @@ drawTem(context,index);
 //repeatIt2(index);
 
 }
+
+
 
 
 

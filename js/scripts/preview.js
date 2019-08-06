@@ -37,13 +37,13 @@ function getQueryVariable(variable)
 }
 
 
-clickX= getQueryVariable("x");
+clickX= getQueryVariable("x").split(",");
 console.log("I'm XXXXX", clickX);
-clickY= getQueryVariable("y");
+clickY= getQueryVariable("y").split(",");
 console.log("I'm YYYYY", clickY);
-clickDrag= getQueryVariable("d");
+clickDrag= getQueryVariable("d").split(",");
 console.log("I'm dragging", clickDrag);
-clickTimeStamp= getQueryVariable("t");
+clickTimeStamp= getQueryVariable("t").split(",");
 console.log("I'm timing", clickTimeStamp);
 
 function redraw(object){
