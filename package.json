@@ -4,7 +4,7 @@
   "description": ">此项目是Mega Project List中的第二个web项目[onlie white board][2] ![onlie white board][101]",
   "main": "server.js",
   "dependencies": {
-    "express": "^4.16.2",
+    "express": "^4.17.3",
     "websocket": "^1.0.25"
   },
   "devDependencies": {},
